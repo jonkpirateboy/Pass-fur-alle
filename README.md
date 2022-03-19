@@ -4,7 +4,7 @@ Since Polisens web queueing solution for getting a passport sucks, and it is mor
 
 ## * What you need
 * Homebrew
-* Install Selenium
+* Selenium
 * Chromedriver
 
 ### Install homebew
