@@ -9,13 +9,13 @@ import time
 web = webdriver.Chrome()
 
 # Constants
-startBookingDate = datetime.today().strftime('%Y-%m-%d')
-endBookingDate = "2022-05-25"
-firstName = 'Test'
-lastName = 'Testsson'
-emailAddress = 'test@test.se'
-phoneNumber = '076127567'
-manualVerify = True
+startBookingDate = datetime.today().strftime('%Y-%m-%d') # Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
+endBookingDate = "2022-05-25" # The last date you want to search for
+firstName = 'Test' # Your first name
+lastName = 'Testsson' # Your last name
+emailAddress = 'test@test.se' # Your email
+phoneNumber = '076127567' # Your phone number
+manualVerify = True # Change this to False if you don't want the script to automatically book the time in the last step
 
 # Terminal output
 print ('Alla län: https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/')
@@ -66,9 +66,9 @@ def searchPassTime():
 def clickTimeIfExists():
     try:
         endBookingDateDateTime = time.strptime(endBookingDate, "%Y-%m-%d")
-        formInputDateTeme = time.strptime(web.find_element(by=By.XPATH, value='//*[@id="datepicker"]').get_property('value'), "%Y-%m-%d")
+        formInputDateTime = time.strptime(web.find_element(by=By.XPATH, value='//*[@id="datepicker"]').get_property('value'), "%Y-%m-%d")
         # If form date is larger than your end booking date, start over
-        if formInputDateTeme > endBookingDateDateTime:
+        if formInputDateTime > endBookingDateDateTime:
             setBookingDate()
             clickTimeIfExists()
         else:
@@ -100,6 +100,7 @@ def clickTimeIfExists():
                 # Verify your booking
                 web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/input').click()
     except NoSuchElementException:
+        # If there are no times available, check next day
         web.find_element(by=By.XPATH, value='//*[@class="btn btn-link pull-right"]').click()
         time.sleep(.5)
         clickTimeIfExists()
