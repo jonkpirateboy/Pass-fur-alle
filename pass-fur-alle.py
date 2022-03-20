@@ -5,6 +5,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import Select    
 from datetime import datetime
 import time
+import sys
+
+sys.setrecursionlimit(100000)
 
 web = webdriver.Chrome()
 

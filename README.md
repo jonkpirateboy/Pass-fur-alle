@@ -15,7 +15,7 @@ Open a terminal and enter
 Open a terminal and enter
 * pip3 install selenium
 
-### Chromedriver
+### Install Chromedriver
 Open a terminal and enter
 * brew install chromedriver
 
