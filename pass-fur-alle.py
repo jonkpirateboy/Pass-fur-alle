@@ -18,7 +18,7 @@ firstName = 'Test' # Your first name
 lastName = 'Testsson' # Your last name
 emailAddress = 'test@test.se' # Your email
 phoneNumber = '076127567' # Your phone number
-manualVerify = True # Change this to False if you don't want the script to automatically book the time in the last step
+manualVerify = True # Change this to False if you want the script to automatically book the time in the last step
 
 # Terminal output
 print ('Alla län: https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/')
@@ -126,6 +126,7 @@ def setBookingDate():
     bookingDate.send_keys(Keys.BACKSPACE)
     myBookingDate = startBookingDate
     bookingDate.send_keys(myBookingDate)
+    bookingDate.send_keys(Keys.TAB)
     searchTimeButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form[1]/div/div[6]/div/input[1]')
     searchTimeButton.click()
 
