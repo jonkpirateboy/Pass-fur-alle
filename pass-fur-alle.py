@@ -14,11 +14,24 @@ web = webdriver.Chrome()
 # Constants
 startBookingDate = datetime.today().strftime('%Y-%m-%d') # Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
 endBookingDate = "2022-05-25" # The last date you want to search for
-firstName = 'Test' # Your first name
-lastName = 'Testsson' # Your last name
 emailAddress = 'test@test.se' # Your email
 phoneNumber = '076127567' # Your phone number
 manualVerify = True # Change this to False if you want the script to automatically book the time in the last step
+
+people = [
+    {
+        'firstName': 'John',
+        'lastName': 'Doe',
+    },
+    {
+        'firstName': 'Johanna',
+        'lastName': 'Doe',
+    },
+    {
+        'firstName': 'Thomas',
+        'lastName': 'Newton',
+    }
+]
 
 # Terminal output
 print ('Alla län: https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/')
@@ -51,12 +64,18 @@ def searchPassTime():
         infoCheck = web.find_element(by=By.XPATH, value='//*[@id="AcceptInformationStorage"]')
         infoNext = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
         infoCheck.click()
+        numPeople = Select(web.find_element(by=By.XPATH, value='//*[@id="NumberOfPeople"]'))
+        select.select_by_visible_text(str(len(people)))
         infoNext.click()
         time.sleep(.5)
+
         # Confirm living in Sweden
-        liveInRadio = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div/div/label[1]')
+        for i, p in enumerate(people):
+            idx = str(i + 1)
+            liveInRadio = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[' + idx + ']/div/label[1]')
+            liveInRadio.click()
+
         liveInNext = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
-        liveInRadio.click()
         liveInNext.click()
         time.sleep(.5)
         setBookingDate()
@@ -79,11 +98,17 @@ def clickTimeIfExists():
             web.find_element(by=By.XPATH, value='//*[@class="timetable-cells"]').click()
             web.find_element(by=By.XPATH, value='//*[@id="booking-next"]').click()
             time.sleep(.5)
-            # Fill out your name
-            web.find_element(by=By.XPATH, value='//*[@id="Customers_0__BookingFieldValues_0__Value"]').send_keys(firstName)
-            web.find_element(by=By.XPATH, value='//*[@id="Customers_0__BookingFieldValues_1__Value"]').send_keys(lastName)
-            web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[4]/div/label[1]').click()
-            web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input').click()
+
+            for i, p in enumerate(people):
+                customer = str(i)
+                firstName = p["firstName"]
+                lastName = p["lastName"]
+                web.find_element(by=By.XPATH, value='//*[@id="Customers_' + customer + '__BookingFieldValues_0__Value"]').send_keys(firstName)
+                web.find_element(by=By.XPATH, value='//*[@id="Customers_' + customer + '__BookingFieldValues_1__Value"]').send_keys(lastName)
+                # For passport label
+                web.find_element(by=By.XPATH, value='//*[@for="Customers_' + customer + '__Services_0__IsSelected"]').click()
+            
+            web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input').click() 
             time.sleep(.5)
             # Move on
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div/input').click()
