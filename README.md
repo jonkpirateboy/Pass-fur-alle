@@ -58,7 +58,7 @@ Open a [Terminal](#terminal) and enter
 
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
-### Install Python 3
+### Install Python 3 (should be pre installed on all macs, but you never know)
 Open a [Terminal](#terminal) and enter
 
 `brew install python3`
