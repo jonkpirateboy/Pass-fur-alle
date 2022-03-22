@@ -12,7 +12,7 @@ Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you
 * Chromedriver
 
 ### Install Google Chrome
-Go to [https://www.google.com/chrome/](https://www.google.com/chrome/) and follow the instructions
+Go to [https://www.google.com/chrome/](www.google.com/chrome) and follow the instructions
 
 ### Install homebew
 Open a [Terminal](#terminal) and enter
@@ -41,7 +41,7 @@ Then enter: `python3 pass-fur-alle.py`
 * Chromedriver
 
 ### Install Google Chrome
-Go to [https://www.google.com/chrome/](https://www.google.com/chrome/) and follow the instructions
+Go to [https://www.google.com/chrome/](www.google.com/chrome) and follow the instructions
 
 ### Install PIP3
 Open a Terminal and enter
@@ -57,6 +57,15 @@ Open a Terminal and enter
 Open a Terminal and enter
 
 `sudo apt-get install chromium-chromedriver`
+or
+`sudo apt-get install chromedriver`
+
+If your Linux doesn't have Chomedriver in apt go to [chromedriver.storage.googleapis.com](https://chromedriver.storage.googleapis.com/index.html) and download a version compatible with your Chrome browser and extract the zip. Then run these commands:
+
+`sudo mv -f ~/Downloads/chromedriver /usr/local/share/`
+`sudo chmod +x /usr/local/share/chromedriver`
+`sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver`
+`sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver`
 
 ### Run the damn thing
 Open a Terminal and go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
