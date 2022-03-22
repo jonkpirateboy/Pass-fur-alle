@@ -12,15 +12,15 @@ Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you
 
 ### Install homebew
 Open a [Terminal](#terminal) and enter
-* `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
 ### Install Selenium
 Open a [Terminal](#terminal) and enter
-* `pip3 install selenium`
+`pip3 install selenium`
 
 ### Install Chromedriver
 Open a [Terminal](#terminal) and enter
-* `brew install chromedriver`
+`brew install chromedriver`
 
 ### Run the damn thing
 Open a Terminal and go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
@@ -34,15 +34,15 @@ Then enter: `python3 pass-fur-alle.py`
 
 ### Install PIP3
 Open a Terminal and enter
-* `sudo apt-get install python3-pip`
+`sudo apt-get install python3-pip`
 
 ### Install Selenium
 Open a Terminal and enter
-* `pip3 install selenium`
+`pip3 install selenium`
 
 ### Install Chromedriver
 Open a Terminal and enter
-* `sudo apt-get install chromium-chromedriver`
+`sudo apt-get install chromium-chromedriver`
 
 ### Run the damn thing
 Open a Terminal and go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
