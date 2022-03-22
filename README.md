@@ -32,7 +32,9 @@ If you want to start some other day, just change this to a date with the format 
 
 `phoneNumber = '076127567'`
 
-### Change this to False if you want the script to automatically book the time in the last step
+### Manual verify
+
+Change this to False if you want the script to automatically book the time in the last step (recommended)
 
 `manualVerify = True`
 
