@@ -6,9 +6,15 @@ Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you
 
 ## What you need for running on MacOS
 
+* Google Chrome
 * Homebrew
 * Selenium
 * Chromedriver
+
+Common for all items below: Skip if you have them installed already.
+
+### Install Google Chrome
+Go to [https://www.google.com/chrome/](https://www.google.com/chrome/) and follow the instructions
 
 ### Install homebew
 Open a [Terminal](#terminal) and enter
@@ -31,9 +37,15 @@ Then enter: `python3 pass-fur-alle.py`
 
 ## What you need for running on Linux
 
+Common for all items below: Skip if you have them installed already.
+
+* Google Chrome
 * PIP3
 * Selenium
 * Chromedriver
+
+### Install Google Chrome
+Go to [https://www.google.com/chrome/](https://www.google.com/chrome/) and follow the instructions
 
 ### Install PIP3
 Open a Terminal and enter
