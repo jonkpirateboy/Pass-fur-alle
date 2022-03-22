@@ -2,6 +2,38 @@
 
 Since Polisens web queueing solution for getting a passport sucks, and it is more or less impossible to book a time, I wrote this small python script. What it does is that it automates the searching for a bookable time. In the file you just change the constants to your information and away you go. :) More or less.
 
+## Settings
+
+In the script there are some constainst that you need to change, they are found under the comment `# Constants`
+
+### Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
+
+`startBookingDate = datetime.today().strftime('%Y-%m-%d')`
+
+### The last date you want to search for
+
+`endBookingDate = "2022-05-25"`
+
+### Your first name
+
+`firstName = 'Test'`
+
+### Your last name
+
+`lastName = 'Testsson'`
+
+### Your email
+
+`emailAddress = 'test@test.se'`
+
+### Your phone number
+
+`phoneNumber = '076127567'`
+
+### Change this to False if you want the script to automatically book the time in the last step
+
+`manualVerify = True`
+
 Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you-need-for-running-on-linux) and [Windows](#what-you-need-for-running-on-windows) (not yet)
 
 ## What you need for running on MacOS
