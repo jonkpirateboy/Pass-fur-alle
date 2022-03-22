@@ -26,6 +26,9 @@ Then enter: `python3 pass-fur-alle.py`
 
 ## What you need for running on Linux
 
+* Selenium
+* Chromedriver
+
 ### Install PIP3
 Open a Terminal and enter
 * `sudo apt-get install python3-pip`
