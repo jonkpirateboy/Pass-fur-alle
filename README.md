@@ -60,7 +60,7 @@ Open a Terminal and enter
 or
 `sudo apt-get install chromedriver`
 
-If your Linux doesn't have Chomedriver in apt go to [chromedriver.storage.googleapis.com](https://chromedriver.storage.googleapis.com/index.html) and download a version compatible with your Chrome browser and extract the zip. Then run these commands:
+If your Linux doesn't have Chomedriver in apt, go to [chromedriver.storage.googleapis.com](https://chromedriver.storage.googleapis.com/index.html) and download a version compatible with your Chrome browser and extract the zip. Then run these commands:
 
 `sudo mv -f ~/Downloads/chromedriver /usr/local/share/`
 
