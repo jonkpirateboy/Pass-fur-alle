@@ -11,8 +11,6 @@ Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you
 * Selenium
 * Chromedriver
 
-Common for all items below: Skip if you have them installed already.
-
 ### Install Google Chrome
 Go to [https://www.google.com/chrome/](https://www.google.com/chrome/) and follow the instructions
 
@@ -36,8 +34,6 @@ Open a Terminal and go to the folder where you downloaded the script, probably *
 Then enter: `python3 pass-fur-alle.py`
 
 ## What you need for running on Linux
-
-Common for all items below: Skip if you have them installed already.
 
 * Google Chrome
 * PIP3
