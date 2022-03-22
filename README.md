@@ -6,7 +6,9 @@ Since Polisens web queueing solution for getting a passport sucks, and it is mor
 
 In the script there are some constainst that you need to change, they are found under the comment `# Constants`
 
-### Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
+### Start searching today.
+
+If you want to start some other day, just change this to a date with the format YYYY-MM-DD
 
 `startBookingDate = datetime.today().strftime('%Y-%m-%d')`
 
