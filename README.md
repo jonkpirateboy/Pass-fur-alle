@@ -31,6 +31,6 @@ I don't know yet, but I'm going to find out
 
 I don't know yet, but I'm probably going to find out. Linux first.
 
-#Terminal
+# Terminal
 ** If you don't know what a terminal is, think of it as the thing you see on the news when something has been hacked, and there's a picture of someone in a hoodie is leaning over a computer? Or that time you saw Wargames?
 To find *Terminal*, open *Launchpad* and the folder *Other* and there it is. Or open *Spotlight* and type *Terminal*.
