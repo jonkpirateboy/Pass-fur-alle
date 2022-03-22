@@ -46,6 +46,7 @@ Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you
 
 * Google Chrome
 * Homebrew
+* Python 3
 * Selenium
 * Chromedriver
 
@@ -56,6 +57,11 @@ Go to [https://www.google.com/chrome/](www.google.com/chrome) and follow the ins
 Open a [Terminal](#terminal) and enter
 
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+### Install Python 3
+Open a [Terminal](#terminal) and enter
+
+`brew install python3`
 
 ### Install Selenium
 Open a [Terminal](#terminal) and enter
