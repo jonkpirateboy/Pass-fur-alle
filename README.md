@@ -40,6 +40,8 @@ Change this to False if you want the script to automatically book the time in th
 
 Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you-need-for-running-on-linux) and [Windows](#what-you-need-for-running-on-windows) (not yet)
 
+# Install
+
 ## What you need for running on MacOS
 
 * Google Chrome
