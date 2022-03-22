@@ -2,6 +2,8 @@
 
 Since Polisens web queueing solution for getting a passport sucks, and it is more or less impossible to book a time, I wrote this small python script. What it does is that it automates the searching for a bookable time. In the file you just change the constants to your information and away you go. :) More or less.
 
+Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you-need-for-running-on-linux) and [Windows](#what-you-need-for-running-on-windows) (not yet)
+
 ## What you need for running on MacOS
 
 * Homebrew
@@ -26,6 +28,7 @@ Then enter: `python3 pass-fur-alle.py`
 
 ## What you need for running on Linux
 
+* PIP3
 * Selenium
 * Chromedriver
 
