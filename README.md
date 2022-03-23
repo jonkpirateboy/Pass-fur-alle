@@ -16,6 +16,12 @@ If you want to start some other day, just change this to a date with the format 
 
 `endBookingDate = "2022-05-25"`
 
+### Just look for the first date
+
+Some say faster, some say slower. But a good addition nevertheless. Uses the function "First available time" instead of checking each day separately, added by @granstubbe
+
+`firstDate = False`
+
 ### Your first name
 
 `firstName = 'Test'`
@@ -59,9 +65,13 @@ Open a [Terminal](#terminal) and enter
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
 ### Install Python 3
-This should be pre installed on all macs, but you never know.
+This should be pre installed on all macs, but you never know. Check by opening a [Terminal](#terminal) and enter
 
-Open a [Terminal](#terminal) and enter
+`python3 --version``
+
+If you get a response saying something like *Python 3.x.x* skip to [Selenium](#install-selenium)
+
+If you don't have Python 3 installed, open a [Terminal](#terminal) and enter
 
 `brew install python3`
 
