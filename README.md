@@ -16,9 +16,9 @@ If you want to start some other day, just change this to a date with the format 
 
 `endBookingDate = "2022-05-25"`
 
-### Just look for the first date
+### First available time
 
-Some say faster, some say slower. But a good addition nevertheless. Uses the function "First available time" instead of checking each day separately, added by @granstubbe
+Some say faster, some say slower. But a good addition nevertheless. If you want to look for the first date using "First available time", change to True. Added by @granstubbe
 
 `firstDate = False`
 

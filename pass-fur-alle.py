@@ -14,7 +14,7 @@ web = webdriver.Chrome()
 # Constants
 startBookingDate = datetime.today().strftime('%Y-%m-%d') # Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
 endBookingDate = "2022-08-25" # The last date you want to search for
-firstDate = False # Just look for the first date
+firstDate = False # If you want to look for the first date using "First available time", change to True
 firstName = 'Test' # Your first name
 lastName = 'Testsson' # Your last name
 emailAddress = 'test@test.se' # Your email
