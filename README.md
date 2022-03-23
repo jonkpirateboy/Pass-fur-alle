@@ -44,7 +44,7 @@ Change this to False if you want the script to automatically book the time in th
 
 `manualVerify = True`
 
-Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you-need-for-running-on-linux) and [Windows](#what-you-need-for-running-on-windows) (not yet)
+Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you-need-for-running-on-linux) and [Windows](#what-you-need-for-running-on-windows)
 
 # Prerequisites
 
@@ -132,7 +132,32 @@ Then enter: `python3 pass-fur-alle.py`
 
 ## What you need for running on Windows
 
-I don't know yet, but I'm probably going to find out.
+* WSL2
+* X Server
+
+### Install X Server
+
+Download and install [VcXsrv](https://sourceforge.net/projects/vcxsrv/) in Windows. Launch it using the XLaunch utility or xlaunch.exe. Accept the default settings but check 'Disable access control'.
+
+### Install WSL2 
+
+Open an administrator PowerShell or Windows Command Prompt and run the folowing command:
+
+`wsl --install`
+
+This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu LTS by default).
+
+Then type `wsl` to start a WSL2 session and follow the instructions for [Linux](#what-you-need-for-running-on-linux).
+
+### Set the X DISPLAY
+
+Finally enter the following command in the WSL2 terminal:
+
+`export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0`
+
+### Run the damn thing
+In the WSL2 terminal go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
+Then enter: `python3 pass-fur-alle.py`
 
 ### Other solution(s)
 
