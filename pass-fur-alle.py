@@ -62,7 +62,6 @@ def searchPassTime():
         setBookingDate()
         clickTimeIfExists()
     except NoSuchElementException:
-        time.sleep(10)
         searchPassTime()
 
 # If a time slot is found, click it
@@ -72,11 +71,12 @@ def clickTimeIfExists():
         formInputDateTime = time.strptime(web.find_element(by=By.XPATH, value='//*[@id="datepicker"]').get_property('value'), "%Y-%m-%d")
         # If form date is larger than your end booking date, start over
         if formInputDateTime > endBookingDateDateTime:
+            time.sleep(15)
             setBookingDate()
             clickTimeIfExists()
         else:
             # Look for a time slot
-            web.find_element(by=By.XPATH, value='//*[@class="timetable-cells"]').click()
+            web.find_element(by=By.XPATH, value='//*[contains(@aria-label,"202")]').click()
             web.find_element(by=By.XPATH, value='//*[@id="booking-next"]').click()
             time.sleep(.5)
             # Fill out your name
@@ -102,9 +102,9 @@ def clickTimeIfExists():
             if (manualVerify == False):
                 # Verify your booking
                 web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/input').click()
+
     except NoSuchElementException:
-        # If there are no times available, check next day
-        web.find_element(by=By.XPATH, value='//*[@class="btn btn-link pull-right"]').click()
+        # If there are no times available, search again
         time.sleep(.5)
         clickTimeIfExists()
 
@@ -113,21 +113,8 @@ def setBookingDate():
     if (expedition):
         select = Select(web.find_element(by=By.XPATH, value='//*[@id="SectionId"]'))
         select.select_by_visible_text(expedition)
-    bookingDate = web.find_element(by=By.XPATH, value='//*[@id="datepicker"]')
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    bookingDate.send_keys(Keys.BACKSPACE)
-    myBookingDate = startBookingDate
-    bookingDate.send_keys(myBookingDate)
-    bookingDate.send_keys(Keys.TAB)
-    searchTimeButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form[1]/div/div[6]/div/input[1]')
+    #Search first available time
+    searchTimeButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form[1]/div/div[6]/div/input[2]')
     searchTimeButton.click()
 
 # Kick it!
