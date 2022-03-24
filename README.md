@@ -134,6 +134,10 @@ Then enter: `python3 pass-fur-alle.py`
 
 I don't know yet, but I'm probably going to find out.
 
+### Other solution(s)
+
+[passport_booker_se](https://github.com/elias123tre/passport_booker_se) by @elias123tre.
+
 ## Glossary
 
 ### Terminal
