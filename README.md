@@ -159,6 +159,10 @@ Finally enter the following command in the WSL2 terminal:
 In the WSL2 terminal go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
 Then enter: `python3 pass-fur-alle.py`
 
+### Other solution(s)
+
+[passport_booker_se](https://github.com/elias123tre/passport_booker_se) by @elias123tre.
+
 ## Glossary
 
 ### Terminal
