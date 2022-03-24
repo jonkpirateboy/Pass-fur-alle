@@ -168,6 +168,7 @@ Open an administrator PowerShell or Windows Command Prompt and run the folowing 
 This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu LTS by default).
 
 Then type `wsl` to start a WSL2 session and follow the instructions for [Linux](#what-you-need-for-running-on-linux).
+>Note: in WSL2 it is easiest to install Chromedriver via the manual method rather than using apt.
 
 ### Set the X DISPLAY
 
