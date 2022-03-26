@@ -106,8 +106,19 @@ def clickTimeIfExists():
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div/input').click()
             time.sleep(.5)
             # Fill out your personal information
-            web.find_element(by=By.XPATH, value='//*[@id="EmailAddress"]').send_keys(emailAddress)
-            web.find_element(by=By.XPATH, value='//*[@id="ConfirmEmailAddress"]').send_keys(emailAddress)
+
+            # Work around ChromeDriver 98/99 bug https://stackoverflow.com/questions/70967207/selenium-chromedriver-cannot-construct-keyevent-from-non-typeable-key
+            emailParts = emailAddress.split('@')
+            emailElements = [web.find_element_by_id("EmailAddress"), web.find_element_by_id("ConfirmEmailAddress")]
+            for e in emailElements:
+                action = ActionChains(web)
+                e.click()
+                e.send_keys(emailParts[0])
+                time.sleep(.5)
+                action.send_keys("@").perform() # the bug is triggered when sending the '@' char in a string
+                time.sleep(.5)
+                e.send_keys(emailParts[1])
+
             web.find_element(by=By.XPATH, value='//*[@id="PhoneNumber"]').send_keys(phoneNumber)
             web.find_element(by=By.XPATH, value='//*[@id="ConfirmPhoneNumber"]').send_keys(phoneNumber)
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[5]/div/label[1]').click()
