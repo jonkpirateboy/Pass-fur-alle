@@ -1,6 +1,7 @@
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import Select    
 from datetime import datetime
@@ -15,12 +16,13 @@ web = webdriver.Chrome()
 startBookingDate = datetime.today().strftime('%Y-%m-%d') # Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
 endBookingDate = "2022-08-25" # The last date you want to search for
 firstDate = False # If you want to look for the first date using "First available time", change to True
-firstName = 'Test' # Your first name
-lastName = 'Testsson' # Your last name
 emailAddress = 'test@test.se' # Your email
 phoneNumber = '076127567' # Your phone number
 manualVerify = True # Change this to False if you want the script to automatically book the time in the last step
 
+people = [{ "firstName": "Test", "lastName": "Testsson"}, { "firstName": "Testina", "lastName": "Testlund"}]
+for i, p in enumerate(people):
+    print("Person %d: %s %s" % (i + 1, people[i]["firstName"], people[i]["lastName"]))
 # Terminal output
 print ('Alla län: https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/')
 lan = input("Välj län. Sista delen av url t ex 'halland'. Eller tryck enter för Skåne: ")
@@ -51,13 +53,16 @@ def searchPassTime():
         # Accept
         infoCheck = web.find_element(by=By.XPATH, value='//*[@id="AcceptInformationStorage"]')
         infoNext = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
+        selectAmountOfPeople = Select(web.find_element_by_id("NumberOfPeople"))
+        selectAmountOfPeople.select_by_value(str(len(people)))
         infoCheck.click()
         infoNext.click()
-        time.sleep(.5)
-        # Confirm living in Sweden
-        liveInRadio = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div/div/label[1]')
+
+        # Confirm living in Sweden for every person
+        for p in range(len(people)):
+            liveInRadio = web.find_element_by_id("ServiceCategoryCustomers_%s__ServiceCategoryId" % str(p))
+            liveInRadio.click()
         liveInNext = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
-        liveInRadio.click()
         liveInNext.click()
         time.sleep(.5)
         setBookingDate()
@@ -86,10 +91,15 @@ def clickTimeIfExists():
                 web.find_element(by=By.XPATH, value='//*[contains(@aria-label,"202")]').click()
             web.find_element(by=By.XPATH, value='//*[@id="booking-next"]').click()
             time.sleep(.5)
-            # Fill out your name
-            web.find_element(by=By.XPATH, value='//*[@id="Customers_0__BookingFieldValues_0__Value"]').send_keys(firstName)
-            web.find_element(by=By.XPATH, value='//*[@id="Customers_0__BookingFieldValues_1__Value"]').send_keys(lastName)
-            web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[4]/div/label[1]').click()
+            # Fill out your names
+            for p in range(len(people)):
+              firstName = people[p]["firstName"]
+              lastName = people[p]["lastName"]
+              web.find_element(by=By.XPATH, value='//*[@id="Customers_%s__BookingFieldValues_0__Value"]' % str(p)).send_keys(firstName)
+              web.find_element(by=By.XPATH, value='//*[@id="Customers_%s__BookingFieldValues_1__Value"]' % str(p)).send_keys(lastName)
+              web.find_element_by_id("Customers_%s__Services_0__IsSelected" % str(p) ).click()
+
+            # Move on
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input').click()
             time.sleep(.5)
             # Move on
