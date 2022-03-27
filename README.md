@@ -28,27 +28,27 @@ Some say faster, some say slower. But a good addition nevertheless. If you want 
 
 Change `firstName` to your first name and `lastName` to your last name.
 
-`people = [<br/>
-    {<br/>
-        "firstName": "Test",<br/>
-        "lastName": "Testsson"<br/>
-    }<br/>
-]`
+people = [  
+    {  
+        "firstName": "Test",  
+        "lastName": "Testsson"  
+    }  
+]
 
 #### Multiple people
 
 If you want to book for multiple people, simply add people like this.
 
-`people = [<br/>
-    {<br/>
-        "firstName": "Test",<br/>
-        "lastName": "Testsson"<br/>
-    },<br/>
-    {<br/>
-        "firstName": "Testina",<br/>
-        "lastName": "Testlund"<br/>
-    }<br/>
-]`
+people = [  
+    {  
+        "firstName": "Test",  
+        "lastName": "Testsson"  
+    },  
+    {  
+        "firstName": "Testina",  
+        "lastName": "Testlund"  
+    }  
+]
 
 ### Your email
 
