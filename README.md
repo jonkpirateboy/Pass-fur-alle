@@ -2,6 +2,8 @@
 
 Since Polisens web queueing solution for getting a passport sucks, and it is more or less impossible to book a time, I wrote this small python script. What it does is that it automates the searching for a bookable time. In the file you just change the constants to your information and away you go. :) More or less.
 
+My site about [Pass für alle](https://passfuralle.se/) (in Swedish)
+
 ## Settings
 
 In the script there are some constainst that you need to change, they are found under the comment `# Constants`
