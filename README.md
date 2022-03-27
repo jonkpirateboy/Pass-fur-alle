@@ -77,7 +77,7 @@ Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you
 * Chromedriver
 
 ### Install Google Chrome
-Go to [https://www.google.com/chrome/](www.google.com/chrome) and follow the instructions
+Go to [www.google.com/chrome](https://www.google.com/chrome/) and follow the instructions
 
 ### Install homebew
 Open a [Terminal](#terminal) and enter
@@ -117,7 +117,7 @@ Then enter: `python3 pass-fur-alle.py`
 * Chromedriver
 
 ### Install Google Chrome
-Go to [https://www.google.com/chrome/](www.google.com/chrome) and follow the instructions
+Go to [www.google.com/chrome](https://www.google.com/chrome/) and follow the instructions
 
 ### Install PIP3
 Open a Terminal and enter
