@@ -10,7 +10,10 @@ import sys
 
 sys.setrecursionlimit(100000)
 
-web = webdriver.Chrome()
+options = webdriver.ChromeOptions() 
+options.add_argument("--disable-blink-features")
+options.add_argument("--disable-blink-features=AutomationControlled")
+web = webdriver.Chrome(options=options)
 
 # Constants
 startBookingDate = datetime.today().strftime('%Y-%m-%d') # Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
@@ -54,7 +57,7 @@ def searchPassTime():
         # Click the first button
         startButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/div[2]/div[1]/div/form/div[2]/input')
         startButton.click()
-        time.sleep(.5)
+        time.sleep(1)
         # Accept
         infoCheck = web.find_element(by=By.XPATH, value='//*[@id="AcceptInformationStorage"]')
         infoNext = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
