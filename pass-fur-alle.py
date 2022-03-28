@@ -61,17 +61,13 @@ def searchPassTime():
         # Accept
         infoCheck = web.find_element(by=By.XPATH, value='//*[@id="AcceptInformationStorage"]')
         infoNext = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
-        #selectAmountOfPeople = Select(web.find_element_by_id("NumberOfPeople"))
-        #selectAmountOfPeople.select_by_value(str(len(people)))
         selectAmountOfPeople = Select(web.find_element(by=By.XPATH, value='//*[@id="NumberOfPeople"]'))
         selectAmountOfPeople.select_by_visible_text(str(len(people)))
         infoCheck.click()
         infoNext.click()
         time.sleep(.5)
         # Confirm living in Sweden
-        # liveInRadio = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div/div/label[1]')
         for p in range(len(people)):
-            # liveInRadio = web.find_element_by_id("ServiceCategoryCustomers_%s__ServiceCategoryId" % str(p))
             divCount = p + 1
             liveInRadio = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[1]' % divCount)
             liveInRadio.click()
@@ -106,15 +102,11 @@ def clickTimeIfExists():
             web.find_element(by=By.XPATH, value='//*[@id="booking-next"]').click()
             time.sleep(.5)
             # Fill out your name
-            # web.find_element(by=By.XPATH, value='//*[@id="Customers_0__BookingFieldValues_0__Value"]').send_keys(firstName)
-            # web.find_element(by=By.XPATH, value='//*[@id="Customers_0__BookingFieldValues_1__Value"]').send_keys(lastName)
-            # web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[4]/div/label[1]').click()
             for p in range(len(people)):
                 firstName = people[p]["firstName"]
                 lastName = people[p]["lastName"]
                 web.find_element(by=By.XPATH, value='//*[@id="Customers_%s__BookingFieldValues_0__Value"]' % str(p)).send_keys(firstName)
                 web.find_element(by=By.XPATH, value='//*[@id="Customers_%s__BookingFieldValues_1__Value"]' % str(p)).send_keys(lastName)
-                # web.find_element_by_id("Customers_%s__Services_0__IsSelected" % str(p) ).click()
                 divCount = p + 1
                 bookingForDivNo = divCount * 4
                 web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[1]' % bookingForDivNo).click()
@@ -141,7 +133,8 @@ def clickTimeIfExists():
         if firstDate == False:
             # If there are no times available, check next day
             web.find_element(by=By.XPATH, value='//*[@class="btn btn-link pull-right"]').click()
-        time.sleep(.5)
+        # Speed of clicking next day
+        time.sleep(1)
         clickTimeIfExists()
 
 # Fill the form with search settings
