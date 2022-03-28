@@ -87,9 +87,10 @@ def searchPassTime():
 def clickTimeIfExists():
     try:
         endBookingDateDateTime = time.strptime(endBookingDate, "%Y-%m-%d")
+        startBookingDateDateTime = time.strptime(startBookingDate, "%Y-%m-%d")
         formInputDateTime = time.strptime(web.find_element(by=By.XPATH, value='//*[@id="datepicker"]').get_property('value'), "%Y-%m-%d")
         # If form date is larger than your end booking date, start over
-        if formInputDateTime > endBookingDateDateTime:
+        if formInputDateTime > endBookingDateDateTime and formInputDateTime < startBookingDateDateTime:
             if firstDate == True:
                 time.sleep(15)
             setBookingDate()
