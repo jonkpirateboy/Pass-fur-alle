@@ -8,7 +8,7 @@ from datetime import datetime
 import time
 import sys
 
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(10000)
 
 options = webdriver.ChromeOptions() 
 options.add_argument("--disable-blink-features")
@@ -65,7 +65,7 @@ def searchPassTime():
         selectAmountOfPeople.select_by_visible_text(str(len(people)))
         infoCheck.click()
         infoNext.click()
-        time.sleep(.5)
+        time.sleep(1)
         # Confirm living in Sweden
         for p in range(len(people)):
             divCount = p + 1
@@ -74,7 +74,7 @@ def searchPassTime():
         liveInNext = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
         # liveInRadio.click()
         liveInNext.click()
-        time.sleep(.5)
+        time.sleep(1)
         setBookingDate()
         clickTimeIfExists()
     except NoSuchElementException:
@@ -100,7 +100,7 @@ def clickTimeIfExists():
             else:
                 web.find_element(by=By.XPATH, value='//*[contains(@aria-label,"202")]').click()
             web.find_element(by=By.XPATH, value='//*[@id="booking-next"]').click()
-            time.sleep(.5)
+            time.sleep(1)
             # Fill out your name
             for p in range(len(people)):
                 firstName = people[p]["firstName"]
@@ -111,10 +111,10 @@ def clickTimeIfExists():
                 bookingForDivNo = divCount * 4
                 web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[1]' % bookingForDivNo).click()
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input').click()
-            time.sleep(.5)
+            time.sleep(1)
             # Move on
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div/input').click()
-            time.sleep(.5)
+            time.sleep(1)
             # Fill out your personal information
             web.find_element(by=By.XPATH, value='//*[@id="EmailAddress"]').send_keys(emailAddress)
             web.find_element(by=By.XPATH, value='//*[@id="ConfirmEmailAddress"]').send_keys(emailAddress)
@@ -125,7 +125,7 @@ def clickTimeIfExists():
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[6]/div/label[1]').click()
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[6]/div/label[2]').click()
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input').click()
-            time.sleep(.5)
+            time.sleep(1)
             if (manualVerify == False):
                 # Verify your booking
                 web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/input').click()
