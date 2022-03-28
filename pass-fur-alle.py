@@ -115,7 +115,10 @@ def clickTimeIfExists():
                 divCount = p + 1
                 bookingForDivNo = divCount * 4
                 web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[1]' % bookingForDivNo).click()
+                web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[2]' % bookingForDivNo).click()
+
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input').click()
+
             time.sleep(.5)
             # Move on
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div/input').click()
