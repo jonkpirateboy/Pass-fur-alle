@@ -25,6 +25,8 @@ people = [
 emailAddress = 'test@test.se' # Your email
 phoneNumber = '076127567' # Your phone number
 manualVerify = True # Change this to False if you want the script to automatically book the time in the last step
+bookPass = True
+bookID = True
 
 # Terminal output
 print ('Alla län: https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/')
@@ -114,8 +116,11 @@ def clickTimeIfExists():
                 # web.find_element_by_id("Customers_%s__Services_0__IsSelected" % str(p) ).click()
                 divCount = p + 1
                 bookingForDivNo = divCount * 4
-                web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[1]' % bookingForDivNo).click()
-                web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[2]' % bookingForDivNo).click()
+
+                if bookPass:
+                    web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[1]' % bookingForDivNo).click()
+                if bookID:
+                    web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[2]' % bookingForDivNo).click()
 
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input').click()
 
