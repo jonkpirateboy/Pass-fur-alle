@@ -110,6 +110,7 @@ Open a [Terminal](#terminal) and enter
 ### Run the damn thing
 Open a Terminal and go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
 Then enter: `python3 pass-fur-alle.py`
+Then answer the question(s) asked in the Terminal
 
 ## What you need for running on Linux
 
@@ -151,6 +152,7 @@ If your Linux doesn't have Chomedriver in apt, go to [chromedriver.storage.googl
 ### Run the damn thing
 Open a Terminal and go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
 Then enter: `python3 pass-fur-alle.py`
+Then answer the question(s) asked in the Terminal
 
 ## What you need for running on Windows
 
@@ -180,6 +182,7 @@ Finally enter the following command in the WSL2 terminal:
 ### Run the damn thing
 In the WSL2 terminal go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
 Then enter: `python3 pass-fur-alle.py`
+Then answer the question(s) asked in the Terminal
 
 ### Other solution(s)
 

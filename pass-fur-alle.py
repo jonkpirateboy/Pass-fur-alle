@@ -28,9 +28,9 @@ manualVerify = True # Change this to False if you want the script to automatical
 
 # Terminal output
 print ('Alla län: https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/')
-lan = input("Välj län. Sista delen av url t ex 'halland'. Eller tryck enter för Skåne: ")
+lan = input("Välj län. Skriv sista delen av URLen på pass-sidan för ditt län. T ex 'halland', se länken ovan. Eller tryck enter för skane: ")
 if lan:
-    expedition = input("Välj expedition. T ex 'Halmstad'. Eller tryck enter för hela länet: ")
+    expedition = input("Välj expedition. T ex 'Halmstad', se länken ovan. Eller tryck enter för hela länet: ")
 
 if lan and expedition:
     print("Län: ", lan)
@@ -146,22 +146,22 @@ def setBookingDate():
     if (expedition):
         select = Select(web.find_element(by=By.XPATH, value='//*[@id="SectionId"]'))
         select.select_by_visible_text(expedition)
+    bookingDate = web.find_element(by=By.XPATH, value='//*[@id="datepicker"]')
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    bookingDate.send_keys(Keys.BACKSPACE)
+    myBookingDate = startBookingDate
+    bookingDate.send_keys(myBookingDate)
+    bookingDate.send_keys(Keys.TAB)
     if firstDate == False:
         # Search next day
-        bookingDate = web.find_element(by=By.XPATH, value='//*[@id="datepicker"]')
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        bookingDate.send_keys(Keys.BACKSPACE)
-        myBookingDate = startBookingDate
-        bookingDate.send_keys(myBookingDate)
-        bookingDate.send_keys(Keys.TAB)
         searchTimeButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form[1]/div/div[6]/div/input[1]')
     else:
         # Search first available time
