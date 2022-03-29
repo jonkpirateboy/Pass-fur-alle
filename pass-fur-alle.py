@@ -95,7 +95,10 @@ def clickTimeIfExists():
         else:
             # Look for a time slot
             if firstDate == False:
-                web.find_element(by=By.XPATH, value='//*[@class="timetable-cells"]').click()
+                if (expedition):
+                    web.find_element(by=By.XPATH, value='//*[@id="Main"]/form[2]/div[2]/table/tbody/tr/*/div/div[contains(@style,"#1862a8")]').click()
+                else:
+                    web.find_element(by=By.XPATH, value='//*[@class="timetable-cells"]').click()
             else:
                 web.find_element(by=By.XPATH, value='//*[contains(@aria-label,"202")]').click()
             web.find_element(by=By.XPATH, value='//*[@id="booking-next"]').click()
