@@ -15,18 +15,18 @@ options.add_argument("--disable-blink-features=AutomationControlled")
 web = webdriver.Chrome(options=options)
 
 # Constants
-startBookingDate = datetime.today().strftime('%Y-%m-%d') # Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
-endBookingDate = "2022-12-24" # The last date you want to search for
-firstDate = False # If you want to look for the first date using "First available time", change to True
+startBookingDate = datetime.today().strftime(2022-04-30) # Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
+endBookingDate = "2022-05-01" # The last date you want to search for
+firstDate = True # If you want to look for the first date using "First available time", change to True
 people = [
     { 
-        "firstName": "Test", 
-        "lastName": "Testsson"
+        "firstName": "Alma", 
+        "lastName": "Hassan"
     }
 ]
-emailAddress = 'test@test.se' # Your email
-phoneNumber = '076127567' # Your phone number
-manualVerify = True # Change this to False if you want the script to automatically book the time in the last step
+emailAddress = 'S2201833@student.hb.se' # Your email
+phoneNumber = '0723062252' # Your phone number
+manualVerify = False # Change this to False if you want the script to automatically book the time in the last step
 
 # Terminal output
 print ('Alla län: https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/')
@@ -35,13 +35,13 @@ if lan:
     expedition = input("Välj expedition. T ex 'Halmstad', se länken ovan. Eller tryck enter för hela länet: ")
 
 if lan and expedition:
-    print("Län: ", lan)
+    print("vastra gotalandsregionen: ", lan)
     print("Expedition: ", expedition)
 elif lan:
-    print("Län: ", lan)
+    print("vastra gotalandsregionen: ", lan)
     expedition = ''
 else:
-    lan = 'skane'
+    lan = ''
     expedition = ''
 
 # Open web page
