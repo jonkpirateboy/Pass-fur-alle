@@ -89,7 +89,7 @@ Open a [Terminal](#terminal) and enter
 ### Install Python 3
 This should be pre installed on all macs, but you never know. Check by opening a [Terminal](#terminal) and enter
 
-`python3 --version``
+`python3 --version`
 
 If you get a response saying something like *Python 3.x.x* skip to [Selenium](#install-selenium)
 
