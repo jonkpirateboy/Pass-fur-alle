@@ -2,6 +2,8 @@
 
 Since Polisens web queueing solution for getting a passport sucks, and it is more or less impossible to book a time, I wrote this small python script. What it does is that it automates the searching for a bookable time. In the file you just change the constants to your information and away you go. :) More or less.
 
+My site about [Pass für alle](https://passfuralle.se/) (in Swedish)
+
 ## Settings
 
 In the script there are some constainst that you need to change, they are found under the comment `# Constants`
@@ -28,27 +30,27 @@ Some say faster, some say slower. But a good addition nevertheless. If you want 
 
 Change `firstName` to your first name and `lastName` to your last name.
 
-`people = [
-    { 
-        "firstName": "Test", 
-        "lastName": "Testsson"
-    }
-]`
+`people = [`  
+    `{`  
+        `"firstName": "Test",`  
+        `"lastName": "Testsson"`  
+ `   }`  
+`]`
 
 #### Multiple people
 
 If you want to book for multiple people, simply add people like this.
 
-`people = [
-    { 
-        "firstName": "Test", 
-        "lastName": "Testsson"
-    }, 
-    { 
-        "firstName": "Testina", 
-        "lastName": "Testlund"
-    }
-]`
+`people = [`  
+    `{`  
+        `"firstName": "Test",`  
+        `"lastName": "Testsson"`  
+    `},`  
+    `{`  
+        `"firstName": "Testina",`  
+        `"lastName": "Testlund"`  
+    `}`  
+`]`
 
 ### Your email
 
@@ -77,7 +79,7 @@ Instructions for [MacOS](#what-you-need-for-running-on-macos), [Linux](#what-you
 * Chromedriver
 
 ### Install Google Chrome
-Go to [https://www.google.com/chrome/](www.google.com/chrome) and follow the instructions
+Go to [www.google.com/chrome](https://www.google.com/chrome/) and follow the instructions
 
 ### Install homebew
 Open a [Terminal](#terminal) and enter
@@ -87,7 +89,7 @@ Open a [Terminal](#terminal) and enter
 ### Install Python 3
 This should be pre installed on all macs, but you never know. Check by opening a [Terminal](#terminal) and enter
 
-`python3 --version``
+`python3 --version`
 
 If you get a response saying something like *Python 3.x.x* skip to [Selenium](#install-selenium)
 
@@ -108,6 +110,7 @@ Open a [Terminal](#terminal) and enter
 ### Run the damn thing
 Open a Terminal and go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
 Then enter: `python3 pass-fur-alle.py`
+Then answer the question(s) asked in the Terminal
 
 ## What you need for running on Linux
 
@@ -117,7 +120,7 @@ Then enter: `python3 pass-fur-alle.py`
 * Chromedriver
 
 ### Install Google Chrome
-Go to [https://www.google.com/chrome/](www.google.com/chrome) and follow the instructions
+Go to [www.google.com/chrome](https://www.google.com/chrome/) and follow the instructions
 
 ### Install PIP3
 Open a Terminal and enter
@@ -149,6 +152,7 @@ If your Linux doesn't have Chomedriver in apt, go to [chromedriver.storage.googl
 ### Run the damn thing
 Open a Terminal and go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
 Then enter: `python3 pass-fur-alle.py`
+Then answer the question(s) asked in the Terminal
 
 ## What you need for running on Windows
 
@@ -163,10 +167,12 @@ Open an administrator PowerShell or Windows Command Prompt and run the folowing 
 This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu LTS by default).
 
 Then type `wsl` to start a WSL2 session and follow the instructions for [Linux](#what-you-need-for-running-on-linux).
+>Note: in WSL2 it is easiest to install Chromedriver via the manual method rather than using apt.
 
 ### Run the damn thing
 In the WSL2 terminal go to the folder where you downloaded the script, probably *Downloads/Pass-fur-alle-main*, and you go there by entering `cd Downloads/Pass-fur-alle-main`
 Then enter: `python3 pass-fur-alle.py`
+Then answer the question(s) asked in the Terminal
 
 ### Other solution(s)
 
