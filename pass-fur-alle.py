@@ -57,7 +57,7 @@ def searchPassTime():
         for i, p in enumerate(people):
             print("Person %d: %s %s" % (i + 1, people[i]["firstName"], people[i]["lastName"]))
         # Click the first button
-        startButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/div[2]/div[1]/div/form/div[3]/input')
+        startButton = web.find_element(by=By.XPATH, value='//*[@class="btn btn-primary btn-large disable-on-save"]')
         startButton.click()
         time.sleep(1)
         # Accept
