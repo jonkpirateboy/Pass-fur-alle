@@ -125,6 +125,15 @@ def clickTimeIfExists():
             # Move on
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div/input').click()
             time.sleep(1)
+            # MANUALLY solve verification again
+            input("Lös även denna verifieringen manuellt och klicka på enter när du är klar.")
+            manualverify2NextButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
+            manualverify2NextButton.click()
+            time.sleep(1)
+            # Verifiy information text page
+            verifyImportantText = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div/input')
+            verifyImportantText.click()
+            time.sleep(1)
             # Fill out your personal information
             web.find_element(by=By.XPATH, value='//*[@id="EmailAddress"]').send_keys(emailAddress)
             web.find_element(by=By.XPATH, value='//*[@id="ConfirmEmailAddress"]').send_keys(emailAddress)
