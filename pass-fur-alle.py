@@ -68,6 +68,11 @@ def searchPassTime():
         infoCheck.click()
         infoNext.click()
         time.sleep(1)
+        # MANUALLY solve verification
+        input("Lös verifieringen manuellt och klicka på enter när du är klar.")
+        manualverifyNextButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
+        manualverifyNextButton.click()
+        time.sleep(1)
         # Confirm living in Sweden
         for p in range(len(people)):
             divCount = p + 1
