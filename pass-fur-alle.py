@@ -19,7 +19,7 @@ web = webdriver.Chrome(options=options)
 
 # Constants
 startBookingDate = datetime.today().strftime('%Y-%m-%d') # Start searching today, if you want to start some other day, just change this to a date with the format YYYY-MM-DD
-endBookingDate = "2022-12-24" # The last date you want to search for
+endBookingDate = "2022-06-15" # The last date you want to search for
 firstDate = False # If you want to look for the first date using "First available time", change to True
 people = [
     { 
@@ -27,8 +27,8 @@ people = [
         "lastName": "Testsson"
     }
 ]
-emailAddress = 'test@test.se' # Your email
-phoneNumber = '076127567' # Your phone number
+emailAddress = 'info@test.se' # Your email
+phoneNumber = '0735679912' # Your phone number
 manualVerify = True # Change this to False if you want the script to automatically book the time in the last step
 
 # Terminal output
@@ -57,8 +57,7 @@ def searchPassTime():
         for i, p in enumerate(people):
             print("Person %d: %s %s" % (i + 1, people[i]["firstName"], people[i]["lastName"]))
         # Click the first button
-        startButton = web.find_element(by=By.XPATH, value='//*[@value="Boka ny tid"]')
-        startButton.click()
+        input("Klicka på boka ny tid manuellt - klicka sen enter här")
         time.sleep(1)
         # Accept
         infoCheck = web.find_element(by=By.XPATH, value='//*[@id="AcceptInformationStorage"]')
@@ -67,6 +66,11 @@ def searchPassTime():
         selectAmountOfPeople.select_by_visible_text(str(len(people)))
         infoCheck.click()
         infoNext.click()
+        time.sleep(1)
+        # MANUALLY solve verification
+        input("Lös verifieringen manuellt och klicka på enter när du är klar.")
+        manualverifyNextButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
+        manualverifyNextButton.click()
         time.sleep(1)
         # Confirm living in Sweden
         for p in range(len(people)):
@@ -119,6 +123,15 @@ def clickTimeIfExists():
             time.sleep(1)
             # Move on
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div/input').click()
+            time.sleep(1)
+            # MANUALLY solve verification again
+            input("Lös även denna verifieringen manuellt och klicka på enter när du är klar.")
+            manualverify2NextButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input')
+            manualverify2NextButton.click()
+            time.sleep(1)
+            # Verifiy information text page
+            verifyImportantText = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div/input')
+            verifyImportantText.click()
             time.sleep(1)
             # Fill out your personal information
             web.find_element(by=By.XPATH, value='//*[@id="EmailAddress"]').send_keys(emailAddress)
