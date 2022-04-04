@@ -66,6 +66,7 @@ def searchPassTime():
         selectAmountOfPeople = Select(web.find_element(by=By.XPATH, value='//*[@id="NumberOfPeople"]'))
         selectAmountOfPeople.select_by_visible_text(str(len(people)))
         infoCheck.click()
+        solveCaptcha()
         infoNext.click()
         time.sleep(1)
         # Confirm living in Sweden
@@ -115,6 +116,7 @@ def clickTimeIfExists():
                 divCount = p + 1
                 bookingForDivNo = divCount * 4
                 web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[1]/div[%s]/div/label[1]' % bookingForDivNo).click()
+            solveCaptcha()
             web.find_element(by=By.XPATH, value='//*[@id="Main"]/form/div[2]/input').click()
             time.sleep(1)
             # Move on
@@ -168,6 +170,11 @@ def setBookingDate():
         # Search first available time
         searchTimeButton = web.find_element(by=By.XPATH, value='//*[@id="Main"]/form[1]/div/div[6]/div/input[2]')
     searchTimeButton.click()
+
+#Solve the captcha... manually
+def solveCaptcha():
+    # Just solve the captcha manually, it only needs to be done twice.
+    input("Fyll i captchan i chrome-fönstret och tryck sedan enter i terminalen...")
 
 # Kick it!
 searchPassTime()
