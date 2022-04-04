@@ -27,7 +27,7 @@ If you want to start some other day, just change this to a date with the format 
 * Download the code to your computer, easiest way is to click . Same a the green Code-button, followed by [Download Zip](https://github.com/jonkpirateboy/Pass-fur-alle/archive/refs/heads/main.zip)
 * Go to [Tampermonkey](https://www.tampermonkey.net/) and install the addon to your browser.
 * Click the new icon in your browser for Tampermonkey and click `Create a new script`.
-* Copy and paste the code from `pass-fur-alle.js` to the editor in the browser and save.
+* Copy and paste the code (replace the code that is there) from `pass-fur-alle.js` to the editor in the browser and save.
 
 ## Run the damn thing
 
