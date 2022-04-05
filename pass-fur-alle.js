@@ -102,6 +102,8 @@
     if (jQuery('#Customers_0__BookingFieldValues_0__Value').length) {
         log('Book time view');
         jQuery('#Customers_0__BookingFieldValues_0__Value').closest('.control-group').before('<h2 style="text-align:center">' + Cookies.get('responseText') + '</h2>');
+        Cookies.remove('TimeSearch');
+        Cookies.remove('responseText');
     }
 
     function log(log) {
