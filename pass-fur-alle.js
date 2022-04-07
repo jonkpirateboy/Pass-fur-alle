@@ -18,7 +18,7 @@
     var dateTo = '2022-12-24';
     
     var datePickerElem = jQuery('#datepicker');
-    if (!Cookies.get('TimeSearch')) {
+    if (!localStorage.getItem('TimeSearch')) {
         log('Set start date');
         datePickerElem.val(dateFrom);
     }
@@ -31,18 +31,18 @@
 
     jQuery('input[name="TimeSearchButton"]').on('click', function () {
         log('Start time search')
-        Cookies.set('TimeSearch', 'TimeSearchButton');
-        Cookies.remove('responseText');
+        localStorage.setItem('TimeSearch', 'TimeSearchButton');
+        localStorage.removeItem('responseText');
     });
     jQuery('input[name="TimeSearchFirstAvailableButton"]').on('click', function () {
         log('Start time search first available')
-        Cookies.set('TimeSearch', 'TimeSearchFirstAvailableButton');
-        Cookies.remove('responseText');
+        localStorage.setItem('TimeSearch', 'TimeSearchFirstAvailableButton');
+        localStorage.removeItem('responseText');
     });
     jQuery('a[href*="/Booking/Booking/Previous/skane?id="]').on('click', function() {
         log('Clear time search')
-        Cookies.remove('TimeSearch');
-        Cookies.remove('responseText');
+        localStorage.removeItem('TimeSearch');
+        localStorage.removeItem('responseText');
     });
 
     // Find a time
@@ -56,13 +56,13 @@
             datePickerElem.val(dateFrom);
         }
 
-        if (Cookies.get('TimeSearch')) {
+        if (localStorage.getItem('TimeSearch')) {
             log('Start time search');
-            if (Date.parse(datePickerVal) > Date.parse(dateTo) || (Cookies.get('TimeSearch') == 'TimeSearchButton' && Date.parse(datePickerVal) < Date.parse(dateFrom))) {
+            if (Date.parse(datePickerVal) > Date.parse(dateTo) || (localStorage.getItem('TimeSearch') == 'TimeSearchButton' && Date.parse(datePickerVal) < Date.parse(dateFrom))) {
                 log('Start over time search');
                 datePickerElem.val(dateFrom);
                 setTimeout(function () {
-                    jQuery('input[name="' + Cookies.get('TimeSearch') + '"]').click();
+                    jQuery('input[name="' + localStorage.getItem('TimeSearch') + '"]').click();
                 }, timeSearchTimeout());
             } else {
                 log('Check for slot');
@@ -76,7 +76,7 @@
                         timeSelectionText = availableTimeSlots.first().data('fromdatetime');
                     }
                     var responseText = jQuery('#selectionText').text() + ' ' + jQuery('#sectionSelectionText').text() + ' ' + timeSelectionText;
-                    Cookies.set('responseText', responseText);
+                    localStorage.setItem('responseText', responseText);
                     if (confirm(responseText)) {
                         jQuery('#booking-next').click();
                     }
@@ -101,9 +101,9 @@
     // Time found
     if (jQuery('#Customers_0__BookingFieldValues_0__Value').length) {
         log('Book time view');
-        jQuery('#Customers_0__BookingFieldValues_0__Value').closest('.control-group').before('<h2 style="text-align:center">' + Cookies.get('responseText') + '</h2>');
-        Cookies.remove('TimeSearch');
-        Cookies.remove('responseText');
+        jQuery('#Customers_0__BookingFieldValues_0__Value').closest('.control-group').before('<h2 style="text-align:center">' + localStorage.getItem('responseText') + '</h2>');
+        localStorage.removeItem('TimeSearch');
+        localStorage.removeItem('responseText');
     }
 
     function log(log) {
@@ -112,7 +112,7 @@
 
     function timeSearchTimeout() {
         var timeout = 1000;
-        if (Cookies.get('TimeSearch') == 'TimeSearchButton') {
+        if (localStorage.getItem('TimeSearch') == 'TimeSearchButton') {
             timeout = 1000;
         } else {
             timeout = 15000;
