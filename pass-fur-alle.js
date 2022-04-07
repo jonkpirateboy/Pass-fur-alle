@@ -13,7 +13,7 @@
 (function() {
 
     // Constants
-    log('Set constants')
+    log('Set constants');
     var dateFrom = today();
     var dateTo = '2022-12-24';
     var autoConfirm = false;

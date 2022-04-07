@@ -12,15 +12,23 @@ In the script there are some constainst that you need to change, they are found 
 
 ### Start searching today.
 
-`dateFrom = datetime.today().strftime('%Y-%m-%d')`
+`var dateFrom = datetime.today().strftime('%Y-%m-%d');`
 
 If you want to start some other day, just change this to a date with the format YYYY-MM-DD
 
-`dateFrom = '2022-08-24'`
+`var dateFrom = '2022-08-24';`
 
 ### The last date you want to search for
 
-`dateTo = '2022-12-24'`
+`var dateTo = '2022-12-24';`
+
+### Auto confirm time 
+
+`var autoConfirm = false;`
+
+If you want to allow auto confirm of found time slot, change to `true`.
+
+`var autoConfirm = true;`
 
 ## Install
 
