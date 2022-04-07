@@ -16,7 +16,8 @@
     log('Set constants')
     var dateFrom = today();
     var dateTo = '2022-12-24';
-    
+    var autoConfirm = false;
+
     var datePickerElem = jQuery('#datepicker');
     if (!localStorage.getItem('TimeSearch')) {
         log('Set start date');
@@ -77,7 +78,7 @@
                     }
                     var responseText = jQuery('#selectionText').text() + ' ' + jQuery('#sectionSelectionText').text() + ' ' + timeSelectionText;
                     localStorage.setItem('responseText', responseText);
-                    if (confirm(responseText)) {
+                    if (autoConfirm || confirm(responseText)) {
                         jQuery('#booking-next').click();
                     }
                 } else {
