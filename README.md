@@ -12,7 +12,7 @@ In the script there are some constainst that you need to change, they are found 
 
 ### Start searching today.
 
-`var dateFrom = datetime.today().strftime('%Y-%m-%d');`
+`var dateFrom = today();`
 
 If you want to start some other day, just change this to a date with the format YYYY-MM-DD
 
