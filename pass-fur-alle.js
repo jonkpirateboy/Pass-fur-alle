@@ -31,17 +31,17 @@
     jQuery('input[name="TimeSearchFirstAvailableButton"]').val('Första lediga tid innan ' + dateTo);
 
     jQuery('input[name="TimeSearchButton"]').on('click', function () {
-        log('Start time search')
+        log('Start time search');
         localStorage.setItem('TimeSearch', 'TimeSearchButton');
         localStorage.removeItem('responseText');
     });
     jQuery('input[name="TimeSearchFirstAvailableButton"]').on('click', function () {
-        log('Start time search first available')
+        log('Start time search first available');
         localStorage.setItem('TimeSearch', 'TimeSearchFirstAvailableButton');
         localStorage.removeItem('responseText');
     });
     jQuery('a[href*="/Booking/Booking/Previous/skane?id="]').on('click', function() {
-        log('Clear time search')
+        log('Clear time search');
         localStorage.removeItem('TimeSearch');
         localStorage.removeItem('responseText');
     });
@@ -79,6 +79,7 @@
                     var responseText = jQuery('#selectionText').text() + ' ' + jQuery('#sectionSelectionText').text() + ' ' + timeSelectionText;
                     localStorage.setItem('responseText', responseText);
                     if (autoConfirm || confirm(responseText)) {
+                        log('Auto confirm');
                         jQuery('#booking-next').click();
                     }
                 } else {
@@ -108,7 +109,7 @@
     }
 
     function log(log) {
-        console.log(log)
+        console.log(log);
     }
 
     function timeSearchTimeout() {
