@@ -62,7 +62,8 @@
                 log('Start over time search');
                 datePickerElem.val(dateFrom);
                 setTimeout(function () {
-                    jQuery('input[name="' + localStorage.getItem('TimeSearch') + '"]').click();
+                    // jQuery('input[name="' + localStorage.getItem('TimeSearch') + '"]').click();
+                    window.location.reload();
                 }, timeSearchTimeout());
             } else {
                 log('Check for slot');
