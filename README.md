@@ -32,10 +32,10 @@ If you want to allow auto confirm of found time slot, change to `true`.
 
 ## Install
 
-* Download the code to your computer, easiest way is to click [here](https://github.com/jonkpirateboy/Pass-fur-alle/archive/refs/heads/main.zip). Same as the green *Code*-button, followed by *Download Zip*
+* Download the code to your computer, easiest way is to click [here](https://github.com/jonkpirateboy/Pass-fur-alle/archive/refs/heads/main.zip). This is the same file you get when clicking the green *Code*-button, followed by *Download Zip*. Extract the zip-file.
 * Go to [Tampermonkey](https://www.tampermonkey.net/) and install the addon to your browser.
 * Click the new icon in your browser for Tampermonkey and click `Create a new script`.
-* Open the `pass-fur-alle.js` with a simple text editor like TextEdit, Notepad or something like that.
+* Open the `pass-fur-alle.js` file with a simple text editor like TextEdit, Notepad or something like that.
 * Copy all the codefrom `pass-fur-alle.js` and paste it in the Tampermonkey editor in the browser (replacing whatever is there) and save.
 
 ## Run the damn thing
