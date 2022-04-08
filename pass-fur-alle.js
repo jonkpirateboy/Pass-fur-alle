@@ -7,7 +7,6 @@
 // @match        https://bokapass.nemoq.se/Booking/Booking/Index/*
 // @grant        none
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
-// @require      https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js
 // ==/UserScript==
 
 (function() {
