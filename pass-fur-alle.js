@@ -6,7 +6,7 @@
 // @author       Jonk
 // @match        https://bokapass.nemoq.se/Booking/Booking/Index/*
 // @grant        none
-// @require      https://code.jquery.com/jquery-3.6.0.min.js
+// @require      https://code.jquery.com/jquery-3.6.0.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
 // ==/UserScript==
 
 (function() {
