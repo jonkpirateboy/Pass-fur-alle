@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.0
+// @version      2.07
 // @description  try to take over the world!
 // @author       Jonk
 // @match        https://bokapass.nemoq.se/Booking/Booking/Index/*
@@ -22,12 +22,6 @@
         log('Set start date');
         datePickerElem.val(dateFrom);
     }
-    expSelectChange();
-    $("#SectionId").change(function() {
-        expSelectChange();
-    });
-    
-    jQuery('input[name="TimeSearchFirstAvailableButton"]').val('Första lediga tid innan ' + dateTo);
 
     jQuery('input[name="TimeSearchButton"]').on('click', function () {
         log('Start time search');
@@ -45,8 +39,13 @@
         localStorage.removeItem('responseText');
     });
 
+    setButtonTexts();
+    $("#SectionId").change(function() {
+        setButtonTexts();
+    });
+
     // Find a time
-    if (jQuery('.btn.btn-link').attr('name','KeyTimeSearchPreviousDayButton').length || jQuery('.btn.btn-link').attr('name','KeyTimeSearchNextDayButton').length) {
+    if (jQuery('.controls .btn.btn-primary[name="TimeSearchButton"]').length || jQuery('.controls .btn.btn-primary[name="TimeSearchFirstAvailableButton"]').length) {
         log('Time search view');
 
         var datePickerVal = datePickerElem.val();
@@ -75,7 +74,7 @@
                     } else {
                         timeSelectionText = availableTimeSlots.first().data('fromdatetime');
                     }
-                    var responseText = jQuery('#selectionText').text() + ' ' + jQuery('#sectionSelectionText').text() + ' ' + timeSelectionText;
+                    var responseText = jQuery.trim(jQuery('#selectionText').text() + ' ' + jQuery('#sectionSelectionText').text() + ' ' + timeSelectionText);
                     localStorage.setItem('responseText', responseText);
                     if (autoConfirm || confirm(responseText)) {
                         log('Auto confirm');
@@ -112,11 +111,14 @@
     }
 
     function timeSearchTimeout() {
+        log('Set timeout');
         var timeout = 1000;
-        if (localStorage.getItem('TimeSearch') == 'TimeSearchButton') {
-            timeout = 1000;
-        } else {
+        //if (jQuery('.validation-summary-errors.alert.alert-error').length) {
+        if (localStorage.getItem('TimeSearch') == 'TimeSearchFirstAvailableButton') {
+            log('Long timeout');
             timeout = 15000;
+        } else {
+            log('Normal timeout');
         }
         return timeout;
     }
@@ -129,7 +131,9 @@
         return yyyy + '-' + mm + '-' + dd;
     }
 
-    function expSelectChange() {
+    function setButtonTexts() {
+        log('Set button texts');
+        jQuery('input[name="TimeSearchFirstAvailableButton"]').val('Första lediga tid innan ' + dateTo);
         if (jQuery("#SectionId option:selected").val() == 0) {
             jQuery('input[name="TimeSearchButton"]').val('Sök tid mellan ' + dateFrom + ' och ' + dateTo);
         } else {
