@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.07
+// @version      2.08
 // @description  try to take over the world!
 // @author       Jonk
 // @match        https://bokapass.nemoq.se/Booking/Booking/Index/*
