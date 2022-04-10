@@ -1,16 +1,18 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.09
+// @version      2.10
 // @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
 // @match        https://bokapass.nemoq.se/Booking/Booking/*
 // @grant        none
 // @require      https://code.jquery.com/jquery-3.6.0.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
+// @require      https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/js/ion.sound.min.js
+
 // ==/UserScript==
 
 (function() {
-
+    
     // Constants
     log('Set constants');
     var dateFrom = today();
@@ -104,6 +106,7 @@
         jQuery('#Customers_0__BookingFieldValues_0__Value').closest('.control-group').before('<h2 style="text-align:center">' + localStorage.getItem('responseText') + '</h2>');
         localStorage.removeItem('TimeSearch');
         localStorage.removeItem('responseText');
+        playSuccessSound();
     }
 
     function log(log) {
@@ -142,6 +145,23 @@
         } else {
             jQuery('input[name="TimeSearchButton"]').val('Funkar inte än');
         }
+    }
+
+    function playSuccessSound() {
+        ion.sound({
+            sounds: [
+                {name: "bell_ring"}
+            ],
+        
+            // main config
+            path: "https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/",
+            preload: true,
+            multiplay: true,
+            volume: 0.9
+        });
+        
+        // play sound
+        ion.sound.play("bell_ring");
     }
 
 })();
