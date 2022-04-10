@@ -24,11 +24,11 @@ If you want to start some other day, just change this to a date with the format 
 
 ### Auto confirm time 
 
-`var autoConfirm = false;`
-
-If you want to allow auto confirm of found time slot, change to `true`.
-
 `var autoConfirm = true;`
+
+If you don't want to allow auto confirm of found time slot, change to `false`.
+
+`var autoConfirm = false;`
 
 ## Install
 
