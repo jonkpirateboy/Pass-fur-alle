@@ -12,22 +12,31 @@ In the script there are some constainst that you need to change, they are found 
 
 ### Start searching today.
 
-`dateFrom = datetime.today().strftime('%Y-%m-%d')`
+`var dateFrom = today();`
 
 If you want to start some other day, just change this to a date with the format YYYY-MM-DD
 
-`dateFrom = '2022-08-24'`
+`var dateFrom = '2022-08-24';`
 
 ### The last date you want to search for
 
-`dateTo = '2022-12-24'`
+`var dateTo = '2022-12-24';`
+
+### Auto confirm time 
+
+`var autoConfirm = true;`
+
+If you don't want to allow auto confirm of found time slot, change to `false`.
+
+`var autoConfirm = false;`
 
 ## Install
 
-* Download the code to your computer, easiest way is to click . Same a the green Code-button, followed by [Download Zip](https://github.com/jonkpirateboy/Pass-fur-alle/archive/refs/heads/main.zip)
+* Download the code to your computer, easiest way is to click [here](https://github.com/jonkpirateboy/Pass-fur-alle/archive/refs/heads/main.zip). This is the same file you get when clicking the green *Code*-button, followed by *Download Zip*. Extract the zip-file.
 * Go to [Tampermonkey](https://www.tampermonkey.net/) and install the addon to your browser.
 * Click the new icon in your browser for Tampermonkey and click `Create a new script`.
-* Copy and paste the code (replace the code that is there) from `pass-fur-alle.js` to the editor in the browser and save.
+* Open the `pass-fur-alle.js` file with a simple text editor like TextEdit, Notepad or something like that.
+* Copy all the codefrom `pass-fur-alle.js` and paste it in the Tampermonkey editor in the browser (replacing whatever is there) and save.
 
 ## Run the damn thing
 

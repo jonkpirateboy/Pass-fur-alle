@@ -12,11 +12,11 @@
 // ==/UserScript==
 
 (function() {
-
+    
     // Constants
     log('Set constants');
     var dateFrom = today();
-    var dateTo = '2022-05-01';
+    var dateTo = '2022-12-24';
     var autoConfirm = true;
 
     var wantedLocations = ['Göteborg', 'Mölndal'];
@@ -140,8 +140,6 @@
 
     function today() {
         var today = new Date();
-        //var days = 2;
-        //today.setDate(today.getDate() + days);
         /*
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -166,14 +164,12 @@
             sounds: [
                 {name: "bell_ring"}
             ],
-
             // main config
             path: "https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/",
             preload: true,
             multiplay: true,
             volume: 0.9
         });
-
         // play sound
         ion.sound.play("bell_ring");
     }
