@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.08
-// @description  try to take over the world!
+// @version      2.09
+// @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
-// @match        https://bokapass.nemoq.se/Booking/Booking/Index/*
+// @match        https://bokapass.nemoq.se/Booking/Booking/*
 // @grant        none
 // @require      https://code.jquery.com/jquery-3.6.0.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
 // ==/UserScript==
@@ -15,7 +15,7 @@
     log('Set constants');
     var dateFrom = today();
     var dateTo = '2022-12-24';
-    var autoConfirm = false;
+    var autoConfirm = true;
 
     var datePickerElem = jQuery('#datepicker');
     if (!localStorage.getItem('TimeSearch')) {
@@ -125,6 +125,12 @@
 
     function today() {
         var today = new Date();
+        /*
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        return yyyy + '-' + mm + '-' + dd;
+        */
         return today.toISOString().slice(0,10);
     }
 
