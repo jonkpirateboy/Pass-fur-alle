@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.10
+// @version      2.11
 // @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
 // @match        https://bokapass.nemoq.se/Booking/Booking/*
@@ -40,6 +40,13 @@
         localStorage.removeItem('TimeSearch');
         localStorage.removeItem('responseText');
     });
+    jQuery('body').on('click', 'a.cancel-search', function() {
+        log('Cancel search');
+        jQuery('html, body').css('overflow', 'visible');
+        localStorage.removeItem('TimeSearch');
+        localStorage.removeItem('responseText');
+        location.reload();
+    });
 
     setButtonTexts();
     $("#SectionId").change(function() {
@@ -59,6 +66,7 @@
 
         if (localStorage.getItem('TimeSearch')) {
             log('Start time search');
+            loader();
             if (Date.parse(datePickerVal) > Date.parse(dateTo) || (localStorage.getItem('TimeSearch') == 'TimeSearchButton' && Date.parse(datePickerVal) < Date.parse(dateFrom))) {
                 log('Start over time search');
                 datePickerElem.val(dateFrom);
@@ -67,10 +75,11 @@
                 }, timeSearchTimeout());
             } else {
                 log('Check for slot');
-                availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"][style*="#1862a8"]');
+                var availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"][style*="#1862a8"]');
                 if (availableTimeSlots.length) {
                     log('Time found');
                     availableTimeSlots.first().click();
+                    var timeSelectionText;
                     if (jQuery.trim(jQuery('#timeSelectionText').text()).length) {
                         timeSelectionText = jQuery('#timeSelectionText').text();
                     } else {
@@ -162,6 +171,27 @@
         
         // play sound
         ion.sound.play("bell_ring");
+    }
+    
+    function loader() {
+        if (!jQuery('.loading').length) {
+            jQuery('html, body').css('overflow', 'hidden');
+            jQuery('body').append('<div class="loading" style="display: flex; width: 100vw; height: 100vh; position: absolute; left: 0; top: 0; justify-content: center; align-items: center;z-index: 999; background: rgba(255,255,255,.6);"><div style="background: #eee; padding: 20px; border-radius: 20px; width: 200px; height: 200px; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 999;"><div>Söker efter tid</div><div class="loader-animation">.</div><a href="#" class="cancel-search">Avbryt</a></div></div>');
+            loaderAnimation();
+        }
+    }
+
+    function loaderAnimation() {
+        jQuery('.loader-animation').html('.');
+        setTimeout(function () {
+            jQuery('.loader-animation').html('..');
+        }, 250);
+        setTimeout(function () {
+            jQuery('.loader-animation').html('...');
+        }, 500);
+        setTimeout(function () {
+            loaderAnimation();
+        }, 750);
     }
 
 })();
