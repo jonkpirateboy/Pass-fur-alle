@@ -12,7 +12,7 @@ My site about [Pass für alle](https://passfuralle.se/) (in Swedish)
 * Go to [Tampermonkey](https://www.tampermonkey.net/) and install the addon to your browser.
 * Click the new icon in your browser for Tampermonkey and click `Create a new script`.
 * Open the `pass-fur-alle.js` file with a simple text editor like TextEdit, Notepad or something like that.
-* Copy all the code from `pass-fur-alle.js` and paste it in the Tampermonkey editor in the browser (replacing whatever is there) and save. If you want to change dates or other settings, read more under [Settings](#settingsSettings) below. 
+* Copy all the code from `pass-fur-alle.js` and paste it in the Tampermonkey editor in the browser (replacing whatever is there) and save. If you want to change dates or other settings, read more under [Settings](#settings) below. 
 * After that, read [Run the damn thing](#run-the-damn-thing).
 
 ## Settings
