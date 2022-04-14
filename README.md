@@ -12,7 +12,7 @@ My site about [Pass für alle](https://passfuralle.se/) (in Swedish)
 * Go to [Tampermonkey](https://www.tampermonkey.net/) and install the addon to your browser.
 * Click the new icon in your browser for Tampermonkey and click `Create a new script`.
 * Open the `pass-fur-alle.js` file with a simple text editor like TextEdit, Notepad or something like that.
-* Copy all the codefrom `pass-fur-alle.js` and paste it in the Tampermonkey editor in the browser (replacing whatever is there) and save. If you want to change dates or other settings, read more under [#settings](Settings) below. After that read [#run-the-damn-thing](Run the damn thing)
+* Copy all the codefrom `pass-fur-alle.js` and paste it in the Tampermonkey editor in the browser (replacing whatever is there) and save. If you want to change dates or other settings, read more under [Settings](#settingsSettings) below. After that read [Run the damn thing](#run-the-damn-thing)
 
 ## Settings
 
@@ -40,7 +40,7 @@ If you don't want to allow auto confirm of found time slot, change to `false`.
 
 ## Run the damn thing
 
-* Go to the [https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/](booking site) and click on where you want to book.
+* Go to the [booking page](https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/) and click on where you want to book.
 * On step 4, where you search for free slots, the buttons are changed to work for you, instead of you working for the buttons.
 * Click whatever suits you, and the site will try to find you a good slot.
 * When a slot has been found you will get an alert, click OK to continue.
