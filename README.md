@@ -23,7 +23,7 @@ In the script there are some constainst that you need to change, they are found 
 
 `var dateFrom = today();`
 
-If you want to start some other day, just change this to a date with the format YYYY-MM-DD
+If you want to start some other day, just change this to a date with the format YYYY-MM-DD, for example:
 
 `var dateFrom = '2022-08-24';`
 
@@ -44,4 +44,4 @@ If you don't want to allow auto confirm of found time slot, change to `false`.
 * Go to the [booking page](https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/) and click on where you want to book.
 * On step 4, where you search for free slots, the buttons are changed to work for you, instead of you working for the buttons.
 * Click whatever suits you, and the site will try to find you a good slot.
-* When a slot has been found you will get an alert, click OK to continue.
+* When a slot has been found you will hear a bell ring and you can now finish the booking of your time.
