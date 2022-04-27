@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.11
+// @version      2.12
 // @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
-// @match        https://bokapass.nemoq.se/Booking/Booking/*
+// @match        https://*.nemoq.se/Booking/Booking/*
 // @grant        none
 // @require      https://code.jquery.com/jquery-3.6.0.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
 // @require      https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/js/ion.sound.min.js
@@ -75,7 +75,7 @@
                 }, timeSearchTimeout());
             } else {
                 log('Check for slot');
-                var availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"][style*="#1862a8"]');
+                var availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"]');
                 if (availableTimeSlots.length) {
                     log('Time found');
                     availableTimeSlots.first().click();
@@ -125,7 +125,6 @@
     function timeSearchTimeout() {
         log('Set timeout');
         var timeout = 1000;
-        //if (jQuery('.validation-summary-errors.alert.alert-error').length) {
         if (localStorage.getItem('TimeSearch') == 'TimeSearchFirstAvailableButton') {
             log('Long timeout');
             timeout = 15000;
@@ -137,12 +136,6 @@
 
     function today() {
         var today = new Date();
-        /*
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-        return yyyy + '-' + mm + '-' + dd;
-        */
         return today.toISOString().slice(0,10);
     }
 
