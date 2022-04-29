@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.12
+// @version      2.13
 // @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
 // @match        https://*.nemoq.se/Booking/Booking/*
