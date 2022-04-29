@@ -19,7 +19,7 @@
     // Constants
     log('Set constants');
     var dateFrom = today();
-    var dateTo = '2022-05-24';
+    var dateTo = '2022-12-24';
     var autoConfirm = true;
 
     var datePickerElem = jQuery('#datepicker');
