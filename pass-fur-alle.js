@@ -105,6 +105,9 @@
                         } else if (jQuery('.btn.btn-link.pull-right').attr('name','KeyTimeSearchNextDayButton').length) {
                             log('Check next day');
                             jQuery('.btn.btn-link.pull-right').attr('name','KeyTimeSearchNextDayButton').click();
+                        } else if (jQuery('#nextweek.btn.btn-link.pull-right').length) {
+                            log('Check next week');
+                            jQuery('#nextweek.btn.btn-link.pull-right').click();
                         }
                     }, timeSearchTimeout());
                 }
