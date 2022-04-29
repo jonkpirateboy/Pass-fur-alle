@@ -75,7 +75,7 @@
                 }, timeSearchTimeout());
             } else {
                 log('Check for slot');
-                var availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"]');
+                var availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"][aria-label!="Bokad"]');
                 if (availableTimeSlots.length) {
                     log('Time found');
                     availableTimeSlots.first().click();
