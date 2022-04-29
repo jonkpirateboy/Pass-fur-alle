@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.13
+// @version      2.14
 // @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
 // @match        https://*.nemoq.se/Booking/Booking/*
@@ -13,10 +13,13 @@
 
 (function() {
     
+    var jQuery = window.jQuery;
+    var ion = window.ion;
+
     // Constants
     log('Set constants');
     var dateFrom = today();
-    var dateTo = '2022-12-24';
+    var dateTo = '2022-05-24';
     var autoConfirm = true;
 
     var datePickerElem = jQuery('#datepicker');
@@ -49,7 +52,7 @@
     });
 
     setButtonTexts();
-    $("#SectionId").change(function() {
+    jQuery("#SectionId").change(function() {
         setButtonTexts();
     });
 
@@ -125,12 +128,14 @@
     function timeSearchTimeout() {
         log('Set timeout');
         var timeout = 1000;
+        /*
         if (localStorage.getItem('TimeSearch') == 'TimeSearchFirstAvailableButton') {
             log('Long timeout');
             timeout = 15000;
         } else {
             log('Normal timeout');
         }
+        */
         return timeout;
     }
 
