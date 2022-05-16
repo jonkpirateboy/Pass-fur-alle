@@ -41,7 +41,7 @@ If you don't want to allow auto confirm of found time slot, change to `false`.
 
 ### Only accept time from specific passport offices
 
-`var acceptOffice = 'Solna,Globen,Täby,Sthlm';`
+`var acceptOffice = 'Solna,Globen,Täby';`
 
 Set which passport offices you will accept time slots from. Separate offices with a comma.
 
