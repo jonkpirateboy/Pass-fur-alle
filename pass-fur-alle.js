@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.14
+// @version      2.15
 // @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
 // @match        https://*.nemoq.se/Booking/Booking/*
@@ -70,6 +70,7 @@
         if (localStorage.getItem('TimeSearch')) {
             log('Start time search');
             loader();
+            captcha();
             if (Date.parse(datePickerVal) > Date.parse(dateTo) || (localStorage.getItem('TimeSearch') == 'TimeSearchButton' && Date.parse(datePickerVal) < Date.parse(dateFrom))) {
                 log('Start over time search');
                 datePickerElem.val(dateFrom);
@@ -118,7 +119,7 @@
         jQuery('#Customers_0__BookingFieldValues_0__Value').closest('.control-group').before('<h2 style="text-align:center">' + localStorage.getItem('responseText') + '</h2>');
         localStorage.removeItem('TimeSearch');
         localStorage.removeItem('responseText');
-        playSuccessSound();
+        playSound('bell_ring');
     }
 
     function log(log) {
@@ -149,15 +150,18 @@
         jQuery('input[name="TimeSearchFirstAvailableButton"]').val('Första lediga tid innan ' + dateTo);
         if (jQuery("#SectionId option:selected").val() == 0) {
             jQuery('input[name="TimeSearchButton"]').val('Sök tid mellan ' + dateFrom + ' och ' + dateTo);
+            jQuery('input[name="TimeSearchButton"]').css('display', '');
         } else {
             jQuery('input[name="TimeSearchButton"]').val('Funkar inte än');
+            jQuery('input[name="TimeSearchButton"]').css('display', 'none');
         }
     }
 
-    function playSuccessSound() {
+    function playSound(sound) {
+        // http://ionden.com/a/plugins/ion.sound/en.html
         ion.sound({
             sounds: [
-                {name: "bell_ring"}
+                {name: sound}
             ],
         
             // main config
@@ -168,7 +172,7 @@
         });
         
         // play sound
-        ion.sound.play("bell_ring");
+        ion.sound.play(sound);
     }
     
     function loader() {
@@ -176,6 +180,17 @@
             jQuery('html, body').css('overflow', 'hidden');
             jQuery('body').append('<div class="loading" style="display: flex; width: 100vw; height: 100vh; position: absolute; left: 0; top: 0; justify-content: center; align-items: center;z-index: 999; background: rgba(255,255,255,.6);"><div style="background: #eee; padding: 20px; border-radius: 20px; width: 200px; height: 200px; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 999;"><div>Söker efter tid</div><div class="loader-animation">.</div><a href="#" class="cancel-search">Avbryt</a></div></div>');
             loaderAnimation();
+        }
+    }
+
+    function captcha() {
+        if (jQuery('.mtcaptcha').length) {
+            playSound('light_bulb_breaking');
+            localStorage.removeItem('TimeSearch');
+            localStorage.removeItem('responseText');
+            setTimeout(function () {
+                location.href = location.href;
+            }, 1000);
         }
     }
 
