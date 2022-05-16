@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.15
+// @version      2.16
 // @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
 // @match        https://*.nemoq.se/Booking/Booking/*
@@ -21,7 +21,7 @@
     var dateFrom = today();
     var dateTo = '2022-12-24';
     var autoConfirm = true;
-    var accept = ''; // For example: 'Solna,Globen,Täby,Sthlm'
+    var acceptOffice = ''; // For example: 'Solna,Globen,Täby,Sthlm'
 
     var datePickerElem = jQuery('#datepicker');
     if (!localStorage.getItem('TimeSearch')) {
@@ -83,10 +83,10 @@
                 var availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"][aria-label!="Bokad"]');
                 
                 // Filter accepted passport offices
-                if(accept && accept.length) {
+                if(acceptOffice && acceptOffice.length) {
                     availableTimeSlots = availableTimeSlots.filter(function() {
                         var office = jQuery(this).closest(".timetable-cells").attr("headers");
-                        return accept.split(",").some(function(acceptedOffice) {
+                        return acceptOffice.split(",").some(function(acceptedOffice) {
                             return office.includes(acceptedOffice)
                         });
                     }) 
