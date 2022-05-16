@@ -39,6 +39,12 @@ If you don't want to allow auto confirm of found time slot, change to `false`.
 
 `var autoConfirm = false;`
 
+### Only accept time from specific passport offices
+
+`var accept = 'Solna,Globen,Täby,Sthlm';`
+
+Set which passport offices you will accept time slots from. Separate offices with a comma.
+
 ## Run the damn thing
 
 * Go to the [booking page](https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/) and click on where you want to book.

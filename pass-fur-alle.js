@@ -21,6 +21,7 @@
     var dateFrom = today();
     var dateTo = '2022-12-24';
     var autoConfirm = true;
+    var accept = ''; // For example: 'Solna,Globen,Täby,Sthlm'
 
     var datePickerElem = jQuery('#datepicker');
     if (!localStorage.getItem('TimeSearch')) {
@@ -80,6 +81,17 @@
             } else {
                 log('Check for slot');
                 var availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"][aria-label!="Bokad"]');
+                
+                // Filter accepted passport offices
+                if(accept && accept.length) {
+                    availableTimeSlots = availableTimeSlots.filter(function() {
+                        var office = jQuery(this).closest(".timetable-cells").attr("headers");
+                        return accept.split(",").some(function(acceptedOffice) {
+                            return office.includes(acceptedOffice)
+                        });
+                    }) 
+                }
+
                 if (availableTimeSlots.length) {
                     log('Time found');
                     availableTimeSlots.first().click();
