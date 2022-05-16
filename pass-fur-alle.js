@@ -21,7 +21,7 @@
     var dateFrom = today();
     var dateTo = '2022-12-24';
     var autoConfirm = true;
-    var acceptOffice = ''; // For example: 'Solna,Globen,Täby,Sthlm'
+    var acceptOffice = '';
 
     var datePickerElem = jQuery('#datepicker');
     if (!localStorage.getItem('TimeSearch')) {
