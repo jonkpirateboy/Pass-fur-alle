@@ -1,53 +1,80 @@
 # Pass für alle
 
-Since Polisens web queueing solution for getting a passport sucks, and it is more or less impossible to book a time, I wrote this small javascript. What it does is that it automates the searching for a bookable time. In the file you just change the constants to your preferred booking dates and away you go. :) More or less.
+A Tampermonkey userscript that helps search for available passport or national ID card appointments in the Swedish Police's current booking service.
 
-*If the script you have on your computer stops working, make sure to check for updates and download the latest version.*
+The script does not sign in for you and does not handle BankID. You sign in at the Police website yourself, choose the number of applicants and passport offices, and then let the script keep searching until it finds an available appointment within your configured date range.
 
-My site about [Pass für alle](https://passfuralle.se/) (in Swedish)
+*If the script stops working, check for updates. The Police may have changed their booking service again.*
+
+My site about [Pass für alle](https://passfuralle.se/) (in Swedish).
 
 ## Install
 
-* Download the code to your computer, easiest way is to click [here](https://github.com/jonkpirateboy/Pass-fur-alle/archive/refs/heads/main.zip). This is the same file you get when clicking the green *Code*-button, followed by *Download Zip*. Extract the zip-file.
-* Go to [Tampermonkey](https://www.tampermonkey.net/) and install the addon to your browser.
-* Click the new icon in your browser for Tampermonkey and click `Create a new script`.
-* Open the `pass-fur-alle.js` file with a simple text editor like TextEdit, Notepad or something like that.
-* Copy all the code from `pass-fur-alle.js` and paste it in the Tampermonkey editor in the browser (replacing whatever is there) and save. If you want to change dates or other settings, read more under [Settings](#settings) below. 
-* After that, read [Run the damn thing](#run-the-damn-thing).
+* Install [Tampermonkey](https://www.tampermonkey.net/) in your browser.
+* Download the code, easiest by clicking [Download ZIP](https://github.com/jonkpirateboy/Pass-fur-alle/archive/refs/heads/main.zip).
+* Extract the zip file.
+* Click the Tampermonkey icon and choose `Create a new script`.
+* Open `pass-fur-alle.js` in a plain text editor.
+* Copy all code from `pass-fur-alle.js` and paste it into the Tampermonkey editor, replacing whatever is already there.
+* Change the date settings if needed, see [Settings](#settings).
+* Save the script.
 
 ## Settings
 
-In the script there are some constainst that you need to change, they are found under the comment `// Constants`
+The settings are near the top of `pass-fur-alle.js`:
 
-### Start searching today.
+```javascript
+// Change dates here:
+var dateFrom = today();
+var dateTo = '2027-12-24';
 
-`var dateFrom = today();`
+// Constants
+var searchRetryDelayMs = 1;
+```
 
-If you want to start some other day, just change this to a date with the format YYYY-MM-DD, for example:
+### First accepted date
 
-`var dateFrom = '2022-08-24';`
+By default, the script accepts appointments from today:
 
-### The last date you want to search for
+```javascript
+var dateFrom = today();
+```
 
-`var dateTo = '2022-12-24';`
+To start from another date, use the `YYYY-MM-DD` format:
 
-### Auto confirm time 
+```javascript
+var dateFrom = '2026-08-24';
+```
 
-`var autoConfirm = true;`
+### Last accepted date
 
-If you don't want to allow auto confirm of found time slot, change to `false`.
+`dateTo` is the last date the script may accept:
 
-`var autoConfirm = false;`
+```javascript
+var dateTo = '2027-12-24';
+```
 
-### Only accept time from specific passport offices
+If the booking page moves past `dateTo`, the script goes back to the search step and searches again.
 
-`var acceptOffice = 'Solna,Globen,Täby,Sthlm City';`
+### Delay between searches
 
-Set which passport offices you will accept time slots from. Separate offices with a comma.
+`searchRetryDelayMs` controls how long the script waits between attempts, in milliseconds:
+
+```javascript
+var searchRetryDelayMs = 1;
+```
+
+Example: `3000` means 3 seconds.
 
 ## Run the damn thing
 
-* Go to the [booking page](https://polisen.se/tjanster-tillstand/pass-och-nationellt-id-kort/boka-tid-hitta-passexpedition/) and click on where you want to book.
-* On step 4, where you search for free slots, the buttons are changed to work for you, instead of you working for the buttons.
-* Click whatever suits you, and the site will try to find you a good slot.
-* When a slot has been found you will hear a bell ring and you can now finish the booking of your time.
+* Go to the Police booking service for passports and national ID cards: [etjanster.polisen.se/etidsbokning/passnid/boka/sok](https://etjanster.polisen.se/etidsbokning/passnid/boka/sok).
+* Sign in with BankID.
+* On step 1, choose the number of applicants and whether everyone lives in Sweden.
+* Choose one or more passport offices in the Police website's own field. The Police allows up to 4 locations.
+* Click the script's `Sök tid mellan ...` button.
+* The script searches for appointments between `dateFrom` and `dateTo`.
+* When an appointment is found, the script selects it, plays a sound, and stops.
+* If no appointment is found, the script keeps searching.
+
+You can stop the search with `Avbryt` in the script's loading overlay. On step 2, it uses the Police website's own back function to return to the search step.

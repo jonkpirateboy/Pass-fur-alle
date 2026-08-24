@@ -1,222 +1,407 @@
 // ==UserScript==
 // @name         Pass für alle
 // @namespace    https://passfuralle.se
-// @version      2.17
+// @version      3.0
 // @description  Ett snabbt och enkelt sätt att boka passtid
 // @author       Jonk
-// @match        https://*.nemoq.se/Booking/Booking/*
+// @match        https://etjanster.polisen.se/etidsbokning/passnid/*
 // @grant        none
-// @require      https://code.jquery.com/jquery-3.6.0.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
-// @require      https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/js/ion.sound.min.js
 
 // ==/UserScript==
 
 (function() {
-    
-    var jQuery = window.jQuery;
-    var ion = window.ion;
+
+    // Change dates here:
+    var dateFrom = today();
+    var dateTo = '2027-12-24';
 
     // Constants
-    log('Set constants');
-    var dateFrom = today();
-    var dateTo = '2022-12-24';
-    var autoConfirm = true;
-    var acceptOffice = '';
+    var searchRetryDelayMs = 1;
+    var audioContext = null;
+    var lastPath = '';
+    var searchSubmitPending = false;
+    var timeCheckPending = false;
 
-    var datePickerElem = jQuery('#datepicker');
-    if (!localStorage.getItem('TimeSearch')) {
-        log('Set start date');
-        datePickerElem.val(dateFrom);
-    }
+    runBooking();
 
-    jQuery('input[name="TimeSearchButton"]').on('click', function () {
-        log('Start time search');
-        localStorage.setItem('TimeSearch', 'TimeSearchButton');
-        localStorage.removeItem('responseText');
-    });
-    jQuery('input[name="TimeSearchFirstAvailableButton"]').on('click', function () {
-        log('Start time search first available');
-        localStorage.setItem('TimeSearch', 'TimeSearchFirstAvailableButton');
-        localStorage.removeItem('responseText');
-    });
-    jQuery('a[href*="/Booking/Booking/Previous/skane?id="]').on('click', function() {
-        log('Clear time search');
-        localStorage.removeItem('TimeSearch');
-        localStorage.removeItem('responseText');
-    });
-    jQuery('body').on('click', 'a.cancel-search', function() {
-        log('Cancel search');
-        jQuery('html, body').css('overflow', 'visible');
-        localStorage.removeItem('TimeSearch');
-        localStorage.removeItem('responseText');
-        location.reload();
-    });
-
-    setButtonTexts();
-    jQuery("#SectionId").change(function() {
-        setButtonTexts();
-    });
-
-    // Find a time
-    if (jQuery('.controls .btn.btn-primary[name="TimeSearchButton"]').length || jQuery('.controls .btn.btn-primary[name="TimeSearchFirstAvailableButton"]').length) {
-        log('Time search view');
-
-        var datePickerVal = datePickerElem.val();
-
-        if (Date.parse(datePickerVal) < Date.parse(dateFrom)) {
-            log('Start later than today');
-            datePickerElem.val(dateFrom);
-        }
-
-        if (localStorage.getItem('TimeSearch')) {
-            log('Start time search');
-            loader();
-            captcha();
-            if (Date.parse(datePickerVal) > Date.parse(dateTo) || (localStorage.getItem('TimeSearch') == 'TimeSearchButton' && Date.parse(datePickerVal) < Date.parse(dateFrom))) {
-                log('Start over time search');
-                datePickerElem.val(dateFrom);
-                setTimeout(function () {
-                    jQuery('input[name="' + localStorage.getItem('TimeSearch') + '"]').click();
-                }, timeSearchTimeout());
-            } else {
-                log('Check for slot');
-                var availableTimeSlots = jQuery('.pointer.timecell.text-center[data-function="timeTableCell"][aria-label!="Bokad"]');
-                
-                // Filter accepted passport offices
-                if(acceptOffice && acceptOffice.length) {
-                    availableTimeSlots = availableTimeSlots.filter(function() {
-                        var office = jQuery(this).closest(".timetable-cells").attr("headers");
-                        return acceptOffice.split(",").some(function(acceptedOffice) {
-                            return office.includes(acceptedOffice)
-                        });
-                    }) 
-                }
-
-                if (availableTimeSlots.length) {
-                    log('Time found');
-                    availableTimeSlots.first().click();
-                    var timeSelectionText;
-                    if (jQuery.trim(jQuery('#timeSelectionText').text()).length) {
-                        timeSelectionText = jQuery('#timeSelectionText').text();
-                    } else {
-                        timeSelectionText = availableTimeSlots.first().data('fromdatetime');
-                    }
-                    var responseText = jQuery.trim(jQuery('#selectionText').text() + ' ' + jQuery('#sectionSelectionText').text() + ' ' + timeSelectionText);
-                    localStorage.setItem('responseText', responseText);
-                    if (autoConfirm || confirm(responseText)) {
-                        log('Auto confirm');
-                        jQuery('#booking-next').click();
-                    }
-                } else {
-                    log('No time found');
-                    setTimeout(function () {
-                        log('Check next');
-                        if (jQuery('#nextweek').length) {
-                            log('Check next week');
-                            jQuery('#nextweek').attr('name','TimeSearchButton');
-                            jQuery('#nextweek').click();
-                        } else if (jQuery('.btn.btn-link.pull-right').attr('name','KeyTimeSearchNextDayButton').length) {
-                            log('Check next day');
-                            jQuery('.btn.btn-link.pull-right').attr('name','KeyTimeSearchNextDayButton').click();
-                        }
-                    }, timeSearchTimeout());
-                }
+    function runBooking() {
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.cancel-search')) {
+                event.preventDefault();
+                log('Cancel search');
+                cancelSearch();
             }
+        });
+
+        routeHandler();
+        setInterval(function() {
+            if (location.pathname !== lastPath) {
+                routeHandler();
+            }
+        }, 500);
+    }
+
+    function routeHandler() {
+        lastPath = location.pathname;
+        if (location.pathname.indexOf('/passnid/boka/sok') !== -1) {
+            searchView();
+        } else if (location.pathname.indexOf('/passnid/boka/reservera') !== -1) {
+            timeView();
+        } else if (location.pathname.indexOf('/passnid/boka/boka') !== -1 && localStorage.getItem('responseText')) {
+            showFoundMessage(localStorage.getItem('responseText'));
+            clearSearch();
+            playSound('bell_ring');
         }
     }
 
-    // Time found
-    if (jQuery('.breadcrumb li').length == 6) {
-        log('Book time view');
-        jQuery('.breadcrumb').after('<h2 style="text-align:center;padding:20px;">' + localStorage.getItem('responseText') + '</h2>'); 
-        localStorage.removeItem('TimeSearch');
-        localStorage.removeItem('responseText');
-        playSound('bell_ring');
+    function searchView() {
+        var searchButton = document.querySelector('#next-button');
+        if (!searchButton) {
+            setTimeout(searchView, 500);
+            return;
+        }
+
+        if (!document.querySelector('#pass-fur-alle-controls')) {
+            var wrapper = document.createElement('div');
+            wrapper.id = 'pass-fur-alle-controls';
+            wrapper.style.margin = '1rem 0';
+            wrapper.innerHTML = '<button type="button" id="pass-fur-alle-start" class="btn btn-primary w-100">Sök tid mellan ' + dateFrom + ' och ' + dateTo + '</button>';
+            searchButton.parentNode.insertBefore(wrapper, searchButton.nextSibling);
+
+            document.querySelector('#pass-fur-alle-start').addEventListener('click', function() {
+                log('Start time search');
+                unlockSound();
+                localStorage.setItem('TimeSearch', 'PolisenTimeSearch');
+                localStorage.removeItem('responseText');
+                searchButton.click();
+            });
+        }
+
+        if (localStorage.getItem('TimeSearch') === 'PolisenTimeSearch' && !searchSubmitPending) {
+            searchSubmitPending = true;
+            setTimeout(function() {
+                if (!isSearchActive()) {
+                    searchSubmitPending = false;
+                    return;
+                }
+
+                log('Retry search');
+                searchSubmitPending = false;
+                searchButton.click();
+            }, timeSearchTimeout());
+        }
     }
 
-    function log(log) {
-        console.log(log);
+    function timeView() {
+        if (!localStorage.getItem('TimeSearch') || timeCheckPending) {
+            return;
+        }
+
+        timeCheckPending = true;
+        loader();
+
+        setTimeout(function() {
+            timeCheckPending = false;
+            var currentDate = currentSearchDate();
+            if (currentDate && Date.parse(currentDate) > Date.parse(dateTo)) {
+                log('Search date is after dateTo');
+                restartSearch();
+                return;
+            }
+
+            var availableTimeSlots = Array.prototype.slice.call(document.querySelectorAll('button.tid-val-button[data-date]:not([disabled])'));
+            availableTimeSlots = availableTimeSlots.filter(function(slot) {
+                var slotDate = slot.getAttribute('data-date') ? slot.getAttribute('data-date').slice(0, 10) : currentDate;
+                return !slotDate || (Date.parse(slotDate) >= Date.parse(dateFrom) && Date.parse(slotDate) <= Date.parse(dateTo));
+            });
+
+            if (availableTimeSlots.length) {
+                timeFound(availableTimeSlots[0]);
+                return;
+            }
+
+            log('No time found');
+            var nextButton = document.querySelector('#nav-next-date');
+            var nextDate = nextSearchDate(nextButton, currentDate);
+            if (nextButton && !nextButton.disabled && nextDate && Date.parse(nextDate) <= Date.parse(dateTo)) {
+                setTimeout(function() {
+                    if (!isSearchActive()) {
+                        return;
+                    }
+
+                    log('Check next date');
+                    nextButton.click();
+                    setTimeout(timeView, 2500);
+                }, timeSearchTimeout());
+                return;
+            }
+
+            restartSearch();
+        }, 500);
+    }
+
+    function timeFound(slot) {
+        log('Time found');
+        var responseText = slot.getAttribute('aria-label') || slot.textContent || slot.getAttribute('data-date');
+        if (slot.getAttribute('data-date')) {
+            responseText = slot.getAttribute('data-date') + ' ' + responseText;
+        }
+        localStorage.setItem('responseText', responseText);
+        slot.click();
+        showFoundMessage(responseText);
+        clearSearch();
+        playSound('bell_ring');
+        removeLoader();
+    }
+
+    function currentSearchDate() {
+        var dateInput = document.querySelector('#tidval-datum');
+        if (dateInput && dateInput.value) {
+            return dateInput.value.slice(0, 10);
+        }
+
+        var firstSlot = document.querySelector('button.tid-val-button[data-date]');
+        if (firstSlot) {
+            return firstSlot.getAttribute('data-date').slice(0, 10);
+        }
+
+        return '';
+    }
+
+    function nextSearchDate(nextButton, currentDate) {
+        if (!nextButton) {
+            return '';
+        }
+
+        var ariaLabel = nextButton.getAttribute('aria-label') || '';
+        var dateMatch = ariaLabel.match(/(\d{1,2})\s+([a-zåäö]+)\s+(\d{4})/i);
+        if (dateMatch) {
+            return swedishDateToIso(dateMatch[1], dateMatch[2], dateMatch[3]);
+        }
+
+        if (currentDate) {
+            return addDays(currentDate, 1);
+        }
+
+        return '';
+    }
+
+    function swedishDateToIso(day, month, year) {
+        var months = {
+            januari: '01',
+            februari: '02',
+            mars: '03',
+            april: '04',
+            maj: '05',
+            juni: '06',
+            juli: '07',
+            augusti: '08',
+            september: '09',
+            oktober: '10',
+            november: '11',
+            december: '12'
+        };
+
+        var monthNumber = months[month.toLowerCase()];
+        if (!monthNumber) {
+            return '';
+        }
+
+        return year + '-' + monthNumber + '-' + String(day).padStart(2, '0');
+    }
+
+    function restartSearch() {
+        log('Restart search');
+        var backButton = document.querySelector('#tillbaka');
+        if (backButton) {
+            backButton.click();
+            setTimeout(searchView, timeSearchTimeout());
+            return;
+        }
+
+        if (location.pathname.indexOf('/passnid/boka/sok') !== -1) {
+            setTimeout(searchView, timeSearchTimeout());
+            return;
+        }
+
+        history.back();
+        setTimeout(searchView, timeSearchTimeout());
+    }
+
+    function showFoundMessage(message) {
+        if (!message || document.querySelector('#pass-fur-alle-found')) {
+            return;
+        }
+
+        var content = document.querySelector('main, app-page-content, body');
+        var heading = document.createElement('h2');
+        heading.id = 'pass-fur-alle-found';
+        heading.style.textAlign = 'center';
+        heading.style.padding = '20px';
+        heading.textContent = message;
+        content.insertBefore(heading, content.firstChild);
+    }
+
+    function log(message) {
+        console.log(message);
     }
 
     function timeSearchTimeout() {
-        log('Set timeout');
-        var timeout = 1000;
-        /*
-        if (localStorage.getItem('TimeSearch') == 'TimeSearchFirstAvailableButton') {
-            log('Long timeout');
-            timeout = 15000;
-        } else {
-            log('Normal timeout');
-        }
-        */
-        return timeout;
+        return searchRetryDelayMs;
     }
 
     function today() {
-        var today = new Date();
-        return today.toISOString().slice(0,10);
+        var now = new Date();
+        return now.toISOString().slice(0, 10);
     }
 
-    function setButtonTexts() {
-        log('Set button texts');
-        jQuery('input[name="TimeSearchFirstAvailableButton"]').val('Första lediga tid innan ' + dateTo);
-        if (jQuery("#SectionId option:selected").val() == 0) {
-            jQuery('input[name="TimeSearchButton"]').val('Sök tid mellan ' + dateFrom + ' och ' + dateTo);
-            jQuery('input[name="TimeSearchButton"]').css('display', '');
-        } else {
-            jQuery('input[name="TimeSearchButton"]').val('Funkar inte än');
-            jQuery('input[name="TimeSearchButton"]').css('display', 'none');
-        }
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result.toISOString().slice(0, 10);
     }
 
     function playSound(sound) {
-        // http://ionden.com/a/plugins/ion.sound/en.html
-        ion.sound({
-            sounds: [
-                {name: sound}
-            ],
-        
-            // main config
-            path: "https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/",
-            preload: true,
-            multiplay: true,
-            volume: 0.9
-        });
-        
-        // play sound
-        ion.sound.play(sound);
+        playFallbackSound(sound);
     }
-    
+
+    function unlockSound() {
+        var context = getAudioContext();
+        if (!context) {
+            return;
+        }
+
+        if (context.state === 'suspended') {
+            context.resume();
+        }
+
+        var gain = context.createGain();
+        gain.gain.value = 0;
+        gain.connect(context.destination);
+
+        var oscillator = context.createOscillator();
+        oscillator.connect(gain);
+        oscillator.start();
+        oscillator.stop(context.currentTime + 0.01);
+    }
+
+    function playFallbackSound(sound) {
+        var context = getAudioContext();
+        if (!context) {
+            return;
+        }
+
+        var play = function() {
+            if (sound === 'bell_ring') {
+                beep(context, 880, 0, 0.18);
+                beep(context, 1175, 0.2, 0.28);
+                beep(context, 880, 0.52, 0.18);
+            } else {
+                beep(context, 220, 0, 0.35);
+            }
+        };
+
+        if (context.state === 'suspended') {
+            context.resume().then(play).catch(function(error) {
+                log(error);
+            });
+            return;
+        }
+
+        play();
+    }
+
+    function beep(context, frequency, delay, duration) {
+        var oscillator = context.createOscillator();
+        var gain = context.createGain();
+        var start = context.currentTime + delay;
+        var end = start + duration;
+
+        oscillator.type = 'sine';
+        oscillator.frequency.value = frequency;
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.4, start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, end);
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+        oscillator.start(start);
+        oscillator.stop(end + 0.02);
+    }
+
+    function getAudioContext() {
+        if (audioContext) {
+            return audioContext;
+        }
+
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) {
+            return null;
+        }
+
+        audioContext = new AudioContext();
+        return audioContext;
+    }
+
     function loader() {
-        if (!jQuery('.loading').length) {
-            jQuery('html, body').css('overflow', 'hidden');
-            jQuery('body').append('<div class="loading" style="display: flex; width: 100vw; height: 100vh; position: absolute; left: 0; top: 0; justify-content: center; align-items: center;z-index: 999; background: rgba(255,255,255,.6);"><div style="background: #eee; padding: 20px; border-radius: 20px; width: 200px; height: 200px; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 999;"><div>Söker efter tid</div><div class="loader-animation">.</div><a href="#" class="cancel-search">Avbryt</a></div></div>');
+        if (!document.querySelector('.loading')) {
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+            document.body.insertAdjacentHTML('beforeend', '<div class="loading" style="display: flex; width: 100vw; height: 100vh; position: fixed; left: 0; top: 0; justify-content: center; align-items: center; z-index: 999999; background: rgba(255,255,255,.6);"><div style="background-color: var(--eac-button-primary-background-color); color: white; padding: 20px; border-radius: var(--bs-border-radius); width: 200px; height: 200px; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 999;"><div>Söker efter tid</div><div class="loader-animation">.</div><a href="#" class="cancel-search" style="color: white;">Avbryt</a></div></div>');
             loaderAnimation();
         }
     }
 
-    function captcha() {
-        if (jQuery('.mtcaptcha').length) {
-            playSound('light_bulb_breaking');
-            localStorage.removeItem('TimeSearch');
-            localStorage.removeItem('responseText');
-            setTimeout(function () {
-                location.href = location.href;
-            }, 1000);
+    function removeLoader() {
+        var loading = document.querySelector('.loading');
+        if (!loading) {
+            return;
         }
+
+        loading.remove();
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
     }
 
     function loaderAnimation() {
-        jQuery('.loader-animation').html('.');
-        setTimeout(function () {
-            jQuery('.loader-animation').html('..');
+        var loaderAnimationElem = document.querySelector('.loader-animation');
+        if (!loaderAnimationElem) {
+            return;
+        }
+        loaderAnimationElem.innerHTML = '.';
+        setTimeout(function() {
+            if (document.querySelector('.loader-animation')) {
+                document.querySelector('.loader-animation').innerHTML = '..';
+            }
         }, 250);
-        setTimeout(function () {
-            jQuery('.loader-animation').html('...');
+        setTimeout(function() {
+            if (document.querySelector('.loader-animation')) {
+                document.querySelector('.loader-animation').innerHTML = '...';
+            }
         }, 500);
-        setTimeout(function () {
+        setTimeout(function() {
             loaderAnimation();
         }, 750);
     }
 
+    function clearSearch() {
+        localStorage.removeItem('TimeSearch');
+        localStorage.removeItem('responseText');
+    }
+
+    function isSearchActive() {
+        return localStorage.getItem('TimeSearch') === 'PolisenTimeSearch';
+    }
+
+    function cancelSearch() {
+        removeLoader();
+        clearSearch();
+        searchSubmitPending = false;
+        timeCheckPending = false;
+
+        var backButton = document.querySelector('#tillbaka');
+        if (backButton) {
+            backButton.click();
+            return;
+        }
+    }
 })();
